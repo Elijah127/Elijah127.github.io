@@ -23,6 +23,12 @@ async function getSpotifyData(url, func) {
       },
     });
     let data = await response.json();
+    console.log(data);
+    if(data?.error?.status == 401){
+      console.log("401 occured");
+      await spotifyapi();
+    getSpotifyData(url,func);
+    }
     func(data);
   }else{
     await spotifyapi();
