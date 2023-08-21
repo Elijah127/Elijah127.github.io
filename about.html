@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Htunes</title>
+        <link href="./assests/img/h tunes logo.png" rel="icon">
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
+        <!-- MDB -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
+        <!--animate on scroll-->
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+        <!--alpine js-->
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+        <link href="./assests/css/style.css" rel="stylesheet">
+    </head>
+</head>
+
+<body>
+
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light p-3 shadow-5">
+        <a class="nav-logo mt-2 mt-lg-0 fs-3 justify-content-center text-white p-2 d-flex" href="index.html">
+            <img class="p-1" src="./assests/img/h tunes logo.png" height="40" alt="h tunes Logo" loading="lazy" />
+            H^tunes
+        </a>
+        <!-- Container wrapper -->
+        <div class="container-fluid justify-content-center">
+            <!-- Toggle button -->
+            <button class="navbar-toggler text-white p-2" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars fs-3"></i>
+            </button>
+
+            <!-- Collapsible wrapper -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Navbar brand -->
+
+                <!-- Left links -->
+                <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Albums</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="newrelease.html">New songs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="playlist.html">playlist</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About us</a>
+                    </li>
+
+                </ul>
+                <!-- Left links -->
+            </div>
+            <!-- Collapsible wrapper -->
+
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+
+
+
+    <div class="d-flex justify-content-center mt-5">
+        <h1 class="text-white"> Artist</h1>
+    </div>
+
+    <div class="d-flex justify-content-center mt-5">
+
+
+        <div class="d-flex flex-column align-items-centers" style="width: fit-content;" x-data="artist">
+            <img src="./assests/img/genre-Drills.jpg" style="max-width: 245px;" class="rounded">
+            <div class="d-flex justify-content-center flex-column align-items-center mt-2">
+                <h4  class="text-white htunes-cards-text">Name:<span x-text="artists.name">
+                </span> </h4>
+                <h4  class="text-white htunes-cards-text">genre:<span x-text="artists.genre">
+                </span></h4>
+                <h4  class="text-white htunes-cards-text">followers:<span x-text="artists.followers">
+                </span></h4>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+    <script src="./js/custom.js"></script>
+
+    <script>
+        AOS.init();
+    </script>
+
+</body>
+
+</html>

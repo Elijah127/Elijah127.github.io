@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Htunes</title>
+    <link href="./assests/img/h tunes logo.png" rel="icon">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fasthand&display=swap" rel="stylesheet">
+
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
+    <!--animate on scroll-->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!--alpine js-->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <link href="./assests/css/style.css" rel="stylesheet">
+</head>
+
+<style>
+    .song-name {
+        font-size: 40px;
+    }
+
+    .main-display {
+        position: relative;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 900px;
+        border-radius: 5px;
+        /* Add the blur effect */
+        height: 350px;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .blurDisplay {
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        filter: blur(10px);
+        -webkit-filter: blur(10px);
+        height: 350px;
+    }
+
+    .darkDisplay {
+        position: absolute;
+        z-index: 3;
+        width: 100%;
+        background-color: black;
+        opacity: 0.5;
+        height: 350px;
+    }
+
+    .album-cover {
+        position: absolute;
+        z-index: 4;
+        width: 100%;
+        height: 100%;
+    }
+
+    .modal-dialog {
+        max-width: 1200px;
+    }
+
+    @media screen and (max-width:805px) {
+        .main-display {
+            height: 650px;
+        }
+
+        .blurDisplay {
+            height: 650px;
+        }
+
+        .darkDisplay {
+            height: 650px;
+        }
+
+        .music-container {
+            justify-content: center;
+        }
+
+        .song-name {
+            text-align: center;
+        }
+
+        .release-date {
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .artist-name-container {
+            justify-content: center;
+        }
+
+        .audio-control {
+            justify-content: center;
+        }
+
+        .album-cover {
+            padding: 0 !important;
+        }
+
+        .artist-name {
+            white-space: nowrap;
+        }
+
+        .song-img {
+            padding: 10px;
+        }
+    }
+
+    /********** Range Input Styles **********/
+    /*Range Reset*/
+    input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+        width: 100%;
+        position: relative;
+        z-index: 3;
+    }
+
+    /* Removes default focus */
+    input[type="range"]:focus {
+        outline: none;
+    }
+
+    /***** Chrome, Safari, Opera and Edge Chromium styles *****/
+    /* slider track */
+    input[type="range"]::-webkit-slider-runnable-track {
+        background-color: #ffffff;
+        visibility: hidden;
+        border-radius: 0.5rem;
+        height: 0.5rem;
+    }
+
+
+    .range-container {
+        position: relative;
+    }
+
+    .range-div {
+        position: absolute;
+        height: 0.5rem;
+        border-radius: 0.5rem;
+        top: 10px;
+        background-color: rgb(255, 255, 255);
+        z-index: 1;
+        width: 99%;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 24px;
+        color: white !important;
+    }
+
+    .range-bg {
+        background: linear-gradient(to right, rgb(55, 65, 81), rgb(20, 22, 26), rgb(66, 64, 64));
+        z-index: 2;
+        border-radius: 0.5rem;
+    }
+
+    /* slider thumb */
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        /* Override default look */
+        appearance: none;
+        margin-top: -4px;
+        /* Centers thumb on the track */
+
+        /*custom styles*/
+        background-color: #504b4b;
+        height: 1rem;
+        width: 1rem;
+        border-radius: 50px;
+        visibility: hidden;
+    }
+
+    input[type="range"]:hover::-webkit-slider-thumb {
+
+        background: rgb(41, 41, 41);
+        visibility: visible;
+    }
+
+    input[type="range"]:focus::-webkit-slider-thumb {
+        /* border: 1px solid #474747;
+        outline: 3px solid #929292; */
+        outline-offset: 0.125rem;
+    }
+
+    /******** Firefox styles ********/
+    /* slider track */
+    input[type="range"]::-moz-range-track {
+        background-color: #053a5f;
+        border-radius: 0.5rem;
+        height: 0.5rem;
+    }
+
+    /* slider thumb */
+    input[type="range"]::-moz-range-thumb {
+        border: none;
+        /*Removes extra border that FF applies*/
+        border-radius: 0;
+        /*Removes default border-radius that FF applies*/
+
+        /*custom styles*/
+        background-color: #5cd5eb;
+        height: 2rem;
+        width: 1rem;
+    }
+
+    input[type="range"]:focus::-moz-range-thumb {
+        border: 1px solid #053a5f;
+        outline: 3px solid #053a5f;
+        outline-offset: 0.125rem;
+    }
+
+    #root>div>div>div>div {
+        background-color: blue !important;
+    }
+
+
+
+    .dropdown-content ul {
+        position: absolute;
+        background: white;
+        padding: -1px;
+        margin: -1px 47px 9px 0px;
+    }
+
+    .dropdown-content ul li {
+        list-style-type: none;
+        padding: 2px;
+    }
+</style>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light p-3 shadow-5">
+        <a class="nav-logo mt-2 mt-lg-0 fs-3 justify-content-center text-white p-2 d-flex" href="#">
+            <img class="p-1" src="./assests/img/h tunes logo.png" height="40" alt="h tunes Logo" loading="lazy" />
+            H^tunes
+        </a>
+        <!-- Container wrapper -->
+        <div class="container-fluid justify-content-center">
+            <!-- Toggle button -->
+            <button class="navbar-toggler text-white p-2" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars fs-3"></i>
+            </button>
+
+            <!-- Collapsible wrapper -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Navbar brand -->
+
+                <!-- Left links -->
+                <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="albums.html">Albums</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="newrelease.html">New releases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="playlist.html">playlists</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About us</a>
+                    </li>
+
+                </ul>
+                <!-- Left links -->
+                <!-- <div class=" d-flex flex-column" x-data="search">
+                    <form class="d-flex input-group w-auto form-search">
+                        <input type="search" id="search-form" x-model='query' class="form-control rounded"
+                            placeholder="Search" aria-label="Search" aria-describedby="search-addon">
+                        <span class="input-group-text text-white border-0" id="search-addon">
+                            <i class="fas fa-search"></i>
+                        </span>
+
+
+                    </form>
+                    <div class="mt-1 rounded p-3 search-dropdown" id="search-dropdown">
+
+                        <template x-for="Track in tracks">
+                            <div class=" w-100 search-content-container">
+                                <img :src="Track.album.images[1].url " class="search-imgs" class="rounded">
+                                <div class="search-content-text">
+                                    <h5 class="text-white" x-text="Track.name"></h5>
+
+                                    <template x-for="Artist in Track.artists">
+                                        <span class="text-white" x-text="Artist.name "></span>
+                                    </template>
+                                </div>
+
+                            </div>
+                        </template>
+
+
+                    </div>
+                </div> -->
+
+            </div>
+
+        </div>
+        <!-- Collapsible wrapper -->
+
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+
+    <!-- <button id="togglePlay">Toggle Play</button> -->
+
+
+    <div class="dropdown" x-data="{open:false}">
+        <button class="Htunes-btn" @click="open =! open">
+            <span> albums </span>
+            <span><i class="fas fa-caret-down "></i> </span>
+        </button>
+        <div class="dropdown-content" x-show="open" @click.outside="open = false" x-transition.duration.500ms>
+            <ul class="mt-1 ">
+                <li>Albums</li>
+                <li>Appears on</li>
+            </ul>
+        </div>
+    </div>
+    <!-- <div class="main-display" x-data="Songtracks">
+        <i class="fas fa-xmark text-white fs-4 ms-auto close-btn" data-mdb-dismiss="modal"></i>
+        <div class="blurDisplay" :style="`background-image: url('${album.images[1].url}')`">
+
+        </div>
+        <div class="darkDisplay"></div>
+        <div class="album-cover p-4">
+            <div class="d-flex flex-wrap align-items-center music-container">
+
+                <img class="rounded song-img" :src="album.images[1].url">
+                <div class="mt-4 p-4 ">
+                    <h1 class="text-white song-name" x-text="album.name">up to the
+                        moon</h1>
+                    <div class="artist-details text-white d-flex flex-column">
+                        <div class="d-flex artist-name-container">
+                            <template x-for="(artist,index) in album.artists">
+
+                                <span class="fs-5 ps-1 artist-name"
+                                    x-text="artist.name + (index !== album.artists.length - 1 ? ' & ' : '')"></span>
+
+                            </template>
+                        </div>
+                        <p class="fs-5 release-date">release date :<span class="pe-1 fs-5"
+                                x-text="album.release_date"></span>
+                        </p>
+                        <div class="d-flex align-items-center audio-control">
+                            <img class="me-3" style="transform: rotate(180deg);" src="./assests/img/skip (3).svg"
+                                height="25" width="25" alt="">
+                            <img src="./assests/img/play (4).svg" height="50" width="50" alt="">
+                            <img class="ms-3" src="./assests/img/skip (3).svg" height="25" width="25" alt="">
+
+
+                        </div>
+                        <audio class="d-none" controls>
+                            <source
+                                src="C:\Users\SONY\Documents\Davo\Music\Cardi B\Cardi B - Invasion of Privacy\08 Ring (feat. Kehlani) - SongsLover.club.mp3"
+                                type="audio/mpeg">
+                        </audio>
+                        <div class="range-container" x-data="{range_value: 0}">
+                            <input type="range" class="mt-2" min="0" max="100" x-model="range_value">
+                            <div class="range-div  range-bg" :style="`width: ${range_value}%;`"></div>
+                            <div class="range-div"></div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div> -->
+
+    <div class="all-cards-container  mt-3 d-flex justify-content-center " data-aos="fade-left" x-data="topTracks">
+
+        <template x-for="track in tracks">
+          <div class="  htunes-cards p-2 pt-0 rounded ms-4 mt-3 mb-3">
+            <img :src="track.images[1].url" class="rounded" alt="" width="245px">
+            <div class=" htunes-cards-text mt-1 w-100">
+              <h3 class="text-white" x-text="track.name"></h3>
+              <p class="text-white">
+                <template x-for="(artist,index) in track.artists">
+                  <span x-text="artist.name + (index !== track.artists.length - 1 ? ' & ' : '')"></span>
+                </template>
+  
+              </p>
+              <a class="d-block w-100" href=""><button
+                  class="Htunes-btn w-100"><span>Get</span></button></a>
+  
+            </div>
+          </div>
+        </template>
+  
+  
+        <a class="d-flex justify-content-center mb-3" href="albums.html"><button class=" fs- view-more-btn text-white">View
+            more<i class="fas fa-forward fs-6 ps-2"></i></button></a>
+  
+      </div>
+    <!-- Button trigger modal -->
+    <!-- <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+        Launch demo modal
+    </button> -->
+
+    <!-- Modal -->
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content bg-transparent">
+                <div class="modal-body">
+                    <i class="fas fa-xmark text-white fs-4 ms-auto close-btn" data-mdb-dismiss="modal"></i>
+
+                    <div class="d-none" id="embed-iframe"></div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div> -->
+
+<!-- 
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <h1>Spotify Web Playback SDK Quick Start</h1>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script> -->
+
+
+
+    <!-- <script>
+        AOS.init();
+    </script> -->
+
+    <!-- <script src="https://sdk.scdn.co/spotify-player.js"></script> -->
+    <script src="./js/routie.min.js"></script>
+    <!-- <script src="https://open.spotify.com/embed-podcast/iframe-api/v1"></script> -->
+
+    <script src="./js/custom.js"></script>
+
+
+    <script>
+        /*
+           window.onSpotifyWebPlaybackSDKReady = () => {
+               const token = 'BQBHv3NMc0GL2GbgDnNx5epwaBCHiP6T4B-WaoB1IMJDrdko7jEo_9ddPa_02gRS9L0vGPkZDPa6hxLqbIt11t3IcWR4xhgJcdmjISqpC0HRYioidX3iCRxwxDtZih9iVm6KL8r1VVxV-95rJWtzzNhF3ue9CVjGeEW480eaRhWkowjuHIhJJPmuICSe2yatj8KedC21X1zRZFG5WgQojWc57sTOF-oS';
+               const player = new Spotify.Player({
+                   name: 'Web Playback SDK Quick Start Player',
+                   getOAuthToken: cb => { cb(token); },
+                   volume: 0.5
+               });
+   
+               // Ready
+               player.addListener('ready', ({ device_id }) => {
+                   console.log('Ready with Device ID', device_id);
+               });
+   
+               // Not Ready
+               player.addListener('not_ready', ({ device_id }) => {
+                   console.log('Device ID has gone offline', device_id);
+               });
+   
+               player.addListener('initialization_error', ({ message }) => {
+                   console.error(message);
+               });
+   
+               player.addListener('authentication_error', ({ message }) => {
+                   console.error(message);
+               });
+   
+               player.addListener('account_error', ({ message }) => {
+                   console.error(message);
+               });
+   
+               document.getElementById('togglePlay').onclick = function () {
+                   console.log(player)
+                   console.log(player.togglePlay)
+                   player.togglePlay();
+               };
+   
+               player.connect();
+           }
+   */
+
+
+        window.onSpotifyIframeApiReady = (IFrameAPI) => {
+            console.log("Running");
+            const element = document.getElementById('embed-iframe');
+            const options = {
+                uri: 'https://open.spotify.com/album/5kE2OAuUYGBqqzscqgBXXf'
+            };
+            const callback = (EmbedController) => { };
+            IFrameAPI.createController(element, options, callback);
+
+            
+        };
+    </script>
+
+
+
+</body>
+
+</html>

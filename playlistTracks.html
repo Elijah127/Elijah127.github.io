@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Platlist Tracks</title>
+  <link href="./assests/img/h tunes logo.png" rel="icon">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
+  <!--animate on scroll-->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <!--alpine js-->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <link href="./assests/css/style.css" rel="stylesheet">
+
+
+  <style>
+    .playlist-cover-bg {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .playlist-cover {
+      background-repeat: repeat;
+      background-size: contain;
+      background-position: center;
+      height: 400px;
+
+    }
+
+    .line {
+      height: 1px;
+      width: 100%;
+      background-color: rgb(189, 179, 179);
+      margin-top: 10px;
+    }
+
+
+
+
+
+    @media screen and (max-width:792px) {
+      .playlist-cover-bg {
+        background-color: transparent;
+        height: inherit;
+        padding: 10px;
+
+      }
+
+      .playlist-cover {
+        background-position-x: center;
+        height: 300px;
+        background-repeat: no-repeat;
+      }
+    }
+
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      color: white !important;
+    }
+
+    .Al-track:hover {
+      padding-left: 10px;
+      padding-bottom: 2px;
+      transition: 0.5s;
+    }
+
+    .openmodal {
+      position: fixed;
+      right: 30px;
+      bottom: 20px;
+      height: 45px;
+      width: 45px;
+      background: rgb(44, 43, 43);
+      text-align: center;
+      line-height: 45px;
+      color: #fff;
+      font-size: 12px;
+      border-radius: 5px;
+      display: none;
+      z-index: 4;
+    }
+    .play-playlist-btn{
+      position: fixed;
+      top: 55%;
+      right: 1%;
+      z-index: 4;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light p-3 shadow-5">
+    <a class="nav-logo mt-2 mt-lg-0 fs-3 justify-content-center text-white p-2 d-flex" href="index.html">
+      <img class="p-1" src="./assests/img/h tunes logo.png" height="40" alt="h tunes Logo" loading="lazy" />
+      H^tunes
+    </a>
+    <!-- Container wrapper -->
+    <div class="container-fluid justify-content-center">
+      <!-- Toggle button -->
+      <button class="navbar-toggler text-white p-2" type="button" data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <i class="fas fa-bars fs-3"></i>
+      </button>
+
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Navbar brand -->
+
+        <!-- Left links -->
+        <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="albums.html">Albums</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="newrelease.html">New releases</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="playlist.html">playlists</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About us</a>
+          </li>
+
+        </ul>
+        <!-- Left links -->
+
+
+      </div>
+
+    </div>
+    <!-- Collapsible wrapper -->
+
+    </div>
+    <!-- Container wrapper -->
+  </nav>
+
+
+  
+  <div x-data="PlaylistsTracks">
+    <div class="playlist-cover-bg">
+
+     
+      <div class="playlist-cover" :style="`background-image: url('${cover_image}')`"></div>
+      <div class="playlist-cover-info">
+        <div class="play-album-btn play-playlist-btn " id="open-modal">
+          <button id="album-play-btn" data-mdb-toggle="modal" data-mdb-target="#exampleModal"
+              class="gradient-btn" @click="playMusic(playlist.uri)">
+              <i class="fas fa-play text-white"></i>
+          </button>
+      
+      </div>
+      </div>
+    </div>
+
+    <div class="openmodal" id="open-modal">
+      <div class=" " data-mdb-toggle="modal" data-mdb-target="#exampleModal"><i
+          class="fas fa-arrow-up-right-from-square"></i></div>
+    </div>
+
+
+
+    <div class="mt-5">
+      <h1 class="text-white text-center">PLAYLISTS TRACKS</h1>
+    </div>
+
+    <div>
+
+      <div class="mt-5">
+        <ol class="text-white">
+          <template x-for="playlisTtracks in track">
+          
+            <div>
+              <li class="m-3 Al-track" @click="playMusic(playlisTtracks.track.uri)" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+                <div class="d-flex">
+                  <img :src="playlisTtracks.track.album.images[1].url" width="50">
+                  <div class="ps-2 w-100">
+                    <div class="d-flex align-items-center">
+                      <h5 class="m-0 text-white" x-text="playlisTtracks.track.name"></h5>
+                      <div class="ms-auto" style="white-space: nowrap;">
+                        <span class="ms-auto" x-text="playlisTtracks.track.trackMins"></span>:
+                        <span class="ms-auto" x-text="playlisTtracks.track.trackSec"></span>
+                      </div>
+                    </div>
+                    <i class="fas fa-circle-play ms-auto"></i>
+                    <template x-for="(artist,index) in playlisTtracks.track.artists">
+                      <span class="fs-6 text-white"
+                        x-text="artist.name + (index !== playlisTtracks.track.artists.length - 1 ? ' & ' : '')">
+                      </span>
+                    </template>
+                  </div>
+
+                </div>
+
+                <div class="line"></div>
+              </li>
+            </div>
+
+          </template>
+        </ol>
+
+      </div>
+
+
+    </div>
+  </div>
+
+
+
+
+  <div class="loader" id="loader">
+    <?xml version="1.0" encoding="utf-8"?>
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      style="margin: auto; display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100"
+      preserveAspectRatio="xMidYMid">
+      <g transform="rotate(0 50 50)">
+        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
+          <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s"
+            repeatCount="indefinite"></animate>
+        </rect>
+      </g>
+      <g transform="rotate(30 50 50)">
+        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
+          <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s"
+            repeatCount="indefinite"></animate>
+        </rect>
+      </g>
+      <g transform="rotate(60 50 50)">
+        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
+          <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite">
+          </animate>
+        </rect>
+      </g>
+      <g transform="rotate(90 50 50)">
+        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
+          <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s"
+            repeatCount="indefinite"></animate>
+        </rect>
+      </g>
+      <g transform="rotate(120 50 50)">
+        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
+          <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s"
+            repeatCount="indefinite"></animate>
+        </rect>
+      </g>
+      <g transform="rotate(150 50 50)">
+        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
+          <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite">
+          </animate>
+        </rect>
+      </g>
+      <g transform="rotate(180 50 50)">
+        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
+          <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s"
+            repeatCount="indefinite"></animate>
+        </rect>
+      </g>
+      <g transform="rotate(210 50 50)">
+        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
+          <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s"
+            repeatCount="indefinite"></animate>
+        </rect>
+      </g>
+      <g transform="rotate(240 50 50)">
+        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
+          <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite">
+          </animate>
+        </rect>
+      </g>
+      <g transform="rotate(270 50 50)">
+        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
+          <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s"
+            repeatCount="indefinite"></animate>
+        </rect>
+      </g>
+      <g transform="rotate(300 50 50)">
+        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
+          <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s"
+            repeatCount="indefinite"></animate>
+        </rect>
+      </g>
+      <g transform="rotate(330 50 50)">
+        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
+          <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite">
+          </animate>
+        </rect>
+      </g>
+      <!-- [ldio] generated by https://loading.io/ -->
+    </svg>
+
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content bg-transparent">
+        <div class="modal-body">
+          <i class="fas fa-xmark text-white fs-4 ms-auto close-btn" data-mdb-dismiss="modal"></i>
+
+          <div id="embed-iframe" style="height: 600px;"></div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+  <script src="./js/routie.min.js"></script>
+
+  <script src="https://open.spotify.com/embed-podcast/iframe-api/v1"></script>
+
+
+  <script src="./js/custom.js"></script>
+
+  <script>
+    AOS.init();
+  </script>
+
+</body>
+
+</html>
