@@ -68,9 +68,9 @@
           <div class=" d-flex flex-column" x-data="searchOptions">
             <div x-data="{open : false}">
               <form class="d-flex input-group w-auto form-search">
-                <input type="search" id="search-form" x-model='query '@keyup="query.length < 1 ? open=false : open=true"
-                  class="form-control rounded" :placeholder="searchType" aria-label="Search"
-                  aria-describedby="search-addon">
+                <input type="search" id="search-form" x-model='query '
+                  @keyup="query.length < 1 ? open=false : open=true" class="form-control rounded"
+                  :placeholder="searchType" aria-label="Search" aria-describedby="search-addon">
                 <span class="input-group-text text-white border-0" id="search-addon">
                   <div class="dropdown ">
                     <div class="" data-mdb-toggle="dropdown" aria-expanded="false">
@@ -126,11 +126,9 @@
     <div class="d-flex flex-column  bg-img main-header ">
       <div class="header-container " data-aos="zoom-out-up">
         <h1 class="text-white ">Tune in to your favourite songs</h1>
-        <p class="text-white d-sm-block d-none mb-1">Et ad deserunt ad irure mollit ea deserunt. Incididunt non velit
-          sint
-          pariatur sunt ut
-          mollit deserunt ex irure quis voluptate. Aute laboris magna aute nostrud elit nostrud officia dolor
-
+        <p class="text-white d-sm-block d-none mb-1">Welcome to a World of Melodies and Emotions: Your Ultimate
+          Destination for Music Exploration
+          Dive into a symphony of genres, from heartwarming ballads that touch your deepest emotions.
         </p>
 
         <a href="#newreleases">
