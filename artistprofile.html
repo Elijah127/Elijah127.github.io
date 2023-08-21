@@ -163,7 +163,7 @@
                             <template x-for="artist in artists">
                                 <div class=" w-100 search-content-container" x-show="open"
                                     @click.outside="open = false">
-                                    <a :href="`/artistprofile.html#artistProfile_id/${artist.id}`" class="d-flex">
+                                    <a @click='location.href = `/artistprofile.html#artistProfile_id/${artist.id}`; location.reload();' class="d-flex">
                                         <img :src="artist.images[1].url " class="search-imgs" class="rounded">
                                         <div class="search-content-text">
                                             <h5 class="text-white" x-text="artist.name"></h5>

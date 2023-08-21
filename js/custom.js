@@ -1,31 +1,33 @@
-const data = {
+const maindata = {
   grant_type: "client_credentials",
   client_id: "7fa68817dd85470c8f4715b21f131d30",
   client_secret: "dff7c9fcf7fc4758b0f4e065fef93009",
 };
 
-function spotifyapi() {
-  fetch("https://accounts.spotify.com/api/token", {
+async function spotifyapi() {
+  let response = await fetch("https://accounts.spotify.com/api/token", {
     method: "POST",
-    body: new URLSearchParams(data),
+    body: new URLSearchParams(maindata),
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      window.localStorage.setItem("token", data.access_token);
-    });
+  });
+  let data = await response.json();
+  window.localStorage.setItem("token", data.access_token);
 }
-spotifyapi();
-function getSpotifyData(url, func) {
-  fetch(url, {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      func(data);
+
+
+async function getSpotifyData(url, func) {
+  if (localStorage.getItem("token")) {
+    let response = await fetch(url, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     });
+    let data = await response.json();
+    func(data);
+  }else{
+    await spotifyapi();
+    getSpotifyData(url,func);
+  }
 }
 
 var embedController;
@@ -54,6 +56,20 @@ routie({
     artistProfile_id = id;
   },
 });
+
+function convertMillisecondsToMinutesAndSeconds(milliseconds) {
+  // Calculate the total seconds
+  const totalSeconds = Math.floor(milliseconds / 1000);
+
+  // Calculate minutes and remaining seconds
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  return {
+    minutes,
+    seconds
+  };
+}
 
 // new releases
 document.addEventListener("alpine:init", () => {
@@ -388,10 +404,6 @@ document.addEventListener("alpine:init", () => {
   }));
 });
 
-
-
-
-
 // search artist
 document.addEventListener("alpine:init", () => {
   Alpine.data("searchArtist", () => ({
@@ -483,13 +495,12 @@ document.addEventListener("alpine:init", () => {
           for (let i = 0; i < current.artistAlbumtrack.length; i++) {
             let albumtrack = current.artistAlbumtrack[i];
             let trackTime = albumtrack.duration_ms;
-            let trackMins = trackTime / 1000 / 60;
-            trackMins = Math.floor(trackMins);
-            let trackSec = (trackTime / 1000 / 60) % 1;
-            trackSec = trackSec.toPrecision(2) * 100;
+
+            const { minutes, seconds } = convertMillisecondsToMinutesAndSeconds(trackTime);
+
             // console.log(trackSec);
-            albumtrack.trackMins = trackMins;
-            albumtrack.trackSec = parseInt(trackSec);
+            albumtrack.trackMins = minutes;
+            albumtrack.trackSec = seconds;
           }
 
           let loader = document.getElementById("loader");
@@ -498,14 +509,13 @@ document.addEventListener("alpine:init", () => {
       );
     },
     playMusic(uri) {
-      if(uri != this.current_uri){
-      embedController.loadUri(uri);
-       
+      if (uri != this.current_uri) {
+        embedController.loadUri(uri);
       }
       let openModel = document.getElementById("open-modal");
       openModel.style.display = "block";
       this.current_uri = uri;
-      console.log(openModel , 'displayed')
+      console.log(openModel, "displayed");
     },
   }));
 });
@@ -514,7 +524,7 @@ document.addEventListener("alpine:init", () => {
 document.addEventListener("alpine:init", () => {
   Alpine.data("Albuminfo", () => ({
     artistAlbum: {},
-    current_uri: '',
+    current_uri: "",
     init() {
       var current = this;
       getSpotifyData(
@@ -522,23 +532,22 @@ document.addEventListener("alpine:init", () => {
         function (data) {
           current.artistAlbum = data;
           console.log(data);
-          if(current.artistAlbum.album_type === "single"){
-          let album_play_btn = document.getElementById("album-play-btn");
-          album_play_btn.style.display="none"
-          console.log(album_play_btn)
+          if (current.artistAlbum.album_type === "single") {
+            let album_play_btn = document.getElementById("album-play-btn");
+            album_play_btn.style.display = "none";
+            console.log(album_play_btn);
           }
         }
       );
     },
     playMusic(uri) {
-      if(uri != this.current_uri){
-      embedController.loadUri(uri);
-       
+      if (uri != this.current_uri) {
+        embedController.loadUri(uri);
       }
       let openModel = document.getElementById("open-modal");
       openModel.style.display = "block";
       this.current_uri = uri;
-      console.log(openModel , 'displayed')
+      console.log(openModel, "displayed");
     },
   }));
 });
@@ -547,7 +556,7 @@ document.addEventListener("alpine:init", () => {
 document.addEventListener("alpine:init", () => {
   Alpine.data("PlaylistsTracks", () => ({
     track: {},
-    playlist:{},
+    playlist: {},
     cover_image: "",
     init() {
       console.log("Playlist tracks");
@@ -565,13 +574,11 @@ document.addEventListener("alpine:init", () => {
             let albumtrack = current.track[i];
             albumtrack = albumtrack.track;
             let trackTime = albumtrack.duration_ms;
-            let trackMins = trackTime / 1000 / 60;
-            trackMins = Math.floor(trackMins);
-            let trackSec = (trackTime / 1000 / 60) % 1;
-            trackSec = trackSec.toPrecision(2) * 100;
+            const { minutes, seconds } = convertMillisecondsToMinutesAndSeconds(trackTime);
+
             // console.log(trackSec);
-            albumtrack.trackMins = trackMins;
-            albumtrack.trackSec = parseInt(trackSec);
+            albumtrack.trackMins = minutes;
+            albumtrack.trackSec = seconds;
           }
 
           let loader = document.getElementById("loader");
@@ -589,14 +596,13 @@ document.addEventListener("alpine:init", () => {
       );
     },
     playMusic(uri) {
-      if(uri != this.current_uri){
-      embedController.loadUri(uri);
-       
+      if (uri != this.current_uri) {
+        embedController.loadUri(uri);
       }
       let openModel = document.getElementById("open-modal");
       openModel.style.display = "block";
       this.current_uri = uri;
-      console.log(openModel , 'displayed')
+      console.log(openModel, "displayed");
     },
   }));
 });
