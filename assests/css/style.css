@@ -1,33 +1,29 @@
 body {
   background: #0d0d0d;
-  font-family: 'Crimson Text', serif;
+  font-family: "Crimson Text", serif;
   overflow-x: hidden;
   padding-top: 80px;
 }
-h1{
+h1 {
   font-size: 22px;
 }
-h2{
+h2 {
   font-size: 20px;
 }
-h3{
+h3 {
   font-size: 18px;
   font-weight: 600;
 }
-h4{
+h4 {
   font-size: 17px;
 }
-h5{
+h5 {
   font-size: 16px;
   font-weight: 600;
-
 }
-h6{
+h6 {
   font-size: 14px;
 }
-
-
-
 
 .navbar {
   background: #333333;
@@ -40,11 +36,38 @@ h6{
   top: 8px;
   position: absolute;
   font-style: italic;
-
 }
 .nav-logo > img {
   transform: rotate(20deg);
 }
+
+.menu-bar-container {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.bar1,
+.bar2,
+.bar3 {
+  width: 30px;
+  height: 3px;
+  background-color: rgb(255, 255, 255);
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+.change .bar1 {
+  transform: translate(0, 11px) rotate(-45deg);
+}
+
+.change .bar2 {
+  opacity: 0;
+}
+
+.change .bar3 {
+  transform: translate(0, -11px) rotate(45deg);
+}
+
 .htunes-font {
   font-style: italic;
 }
@@ -85,11 +108,10 @@ h6{
   overflow-x: auto;
   /* display: none; */
 }
-@media screen and (max-width:992px){
+@media screen and (max-width: 992px) {
   .search-dropdown {
     overflow-y: scroll;
     padding-left: 20px;
-
   }
 }
 /* .form-search{
@@ -116,9 +138,7 @@ h6{
   .nav-item > a {
     margin-left: 0 !important;
   }
-  .navbar-toggler {
-    padding: 10px !important;
-  }
+  
 
   .search-options-menu {
     width: 50%;
@@ -263,8 +283,34 @@ h6{
 @media screen and (max-width: 600px) {
   .htunes-cards {
     margin-left: 12px !important;
+    max-width: 200px;
+  }
+  .top-songs-cards-text {
+    font-size: small;
+  }
+  .top-songs-cards-text > span {
+    font-size: small;
+  }
+  .imgs{
+    max-width: 200px;
   }
 }
+
+@media screen and (max-width: 450px) {
+  .htunes-cards {
+    max-width: 150px;
+  }
+  .top-songs-cards-text {
+    font-size: smaller;
+  }
+  .top-songs-cards-text > span {
+    font-size: smaller                                                                                                                                                                                                                                                              ;
+  }
+  .imgs{
+    max-width: 150px;
+  }
+}
+
 @media screen and (max-width: 992px) {
   .all-cards-container {
     justify-content: normal !important;

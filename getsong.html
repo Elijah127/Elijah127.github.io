@@ -327,8 +327,7 @@
     </nav>
     <!-- Navbar -->
 
-    <!-- <button id="togglePlay">Toggle Play</button> -->
-
+    <!-- 
 
     <div class="dropdown" x-data="{open:false}">
         <button class="Htunes-btn" @click="open =! open">
@@ -342,7 +341,9 @@
             </ul>
         </div>
     </div>
-    <!-- <div class="main-display" x-data="Songtracks">
+
+
+    <div class="main-display" x-data="Songtracks">
         <i class="fas fa-xmark text-white fs-4 ms-auto close-btn" data-mdb-dismiss="modal"></i>
         <div class="blurDisplay" :style="`background-image: url('${album.images[1].url}')`">
 
@@ -394,131 +395,129 @@
 
 
 
-    </div> -->
+    </div>
+    
 
     <div class="all-cards-container  mt-3 d-flex justify-content-center " data-aos="fade-left" x-data="topTracks">
 
         <template x-for="track in tracks">
-          <div class="  htunes-cards p-2 pt-0 rounded ms-4 mt-3 mb-3">
-            <img :src="track.images[1].url" class="rounded" alt="" width="245px">
-            <div class=" htunes-cards-text mt-1 w-100">
-              <h3 class="text-white" x-text="track.name"></h3>
-              <p class="text-white">
-                <template x-for="(artist,index) in track.artists">
-                  <span x-text="artist.name + (index !== track.artists.length - 1 ? ' & ' : '')"></span>
-                </template>
-  
-              </p>
-              <a class="d-block w-100" href=""><button
-                  class="Htunes-btn w-100"><span>Get</span></button></a>
-  
-            </div>
-          </div>
-        </template>
-  
-  
-        <a class="d-flex justify-content-center mb-3" href="albums.html"><button class=" fs- view-more-btn text-white">View
-            more<i class="fas fa-forward fs-6 ps-2"></i></button></a>
-  
-      </div>
-    <!-- Button trigger modal -->
-    <!-- <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
-        Launch demo modal
-    </button> -->
+            <div class="  htunes-cards p-2 pt-0 rounded ms-4 mt-3 mb-3">
+                <img :src="track.images[1].url" class="rounded" alt="" width="245px">
+                <div class=" htunes-cards-text mt-1 w-100">
+                    <h3 class="text-white" x-text="track.name"></h3>
+                    <p class="text-white">
+                        <template x-for="(artist,index) in track.artists">
+                            <span x-text="artist.name + (index !== track.artists.length - 1 ? ' & ' : '')"></span>
+                        </template>
 
-    <!-- Modal -->
-    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content bg-transparent">
-                <div class="modal-body">
-                    <i class="fas fa-xmark text-white fs-4 ms-auto close-btn" data-mdb-dismiss="modal"></i>
-
-                    <div class="d-none" id="embed-iframe"></div>
+                    </p>
+                    <a class="d-block w-100" href=""><button class="Htunes-btn w-100"><span>Get</span></button></a>
 
                 </div>
+            </div>
+        </template>
 
 
+        <a class="d-flex justify-content-center mb-3" href="albums.html"><button
+                class=" fs- view-more-btn text-white">View
+                more<i class="fas fa-forward fs-6 ps-2"></i></button></a>
+
+    </div>
+    <!-- Button trigger modal -->
+
+
+
+    <!-- <div class="container-fluid">
+        <div class="all-cards-container mt-3 d-flex " x-data="music"
+            style="flex-wrap: wrap; justify-content: center !important;">
+            <div class="row">
+
+                <template x-for="track in tracks">
+                    <div class="col-6 col-md-3 col-lg">
+                        <div class="top-songs-cards htunes-cards p-2 pt-0 rounded ms-4 mt-3 mb-3">
+                            <img :src="track.images[0].url" class="rounded" alt="" width="150px">
+                            <div
+                                class=" h-100 justify-content-around d-flex  flex-column top-songs-cards-text htunes-cards-text mt-3 w-100">
+                                <h3 class="text-white" x-text="track.name"></h3>
+
+                                <p class="text-white">
+                                    <template x-for="(artist,index) in track.artists">
+                                        <span
+                                            x-text="artist.name + (index !== track.artists.length - 1 ? ' & ' : '')"></span>
+                                    </template>
+
+                                </p>
+                                <a class="d-block w-100" :href="`/album-tracks.html#album_id/${track.id}`"><button
+                                        class="Htunes-btn w-100"><span>Get</span></button></a>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </template>
             </div>
         </div>
     </div> -->
 
-<!-- 
-    <script src="https://sdk.scdn.co/spotify-player.js"></script>
-    <h1>Spotify Web Playback SDK Quick Start</h1>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+    <!-- <div class="all-cards-container mt-3 d-flex " x-data="music"
+    style="flex-wrap: wrap; justify-content: center !important;">
+    <template x-for="track in tracks">
+        <div class="top-songs-cards htunes-cards p-2 pt-0 rounded ms-4 mt-3 mb-3" >
+            <img :src="track.images[1].url" class="rounded imgs" alt="" width="245px">
+            <div
+                class=" h-100 justify-content-around d-flex  flex-column top-songs-cards-text htunes-cards-text mt-3 w-100">
+                <h3 class="text-white" x-text="track.name"></h3>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script> -->
+                <p class="text-white">
+                    <template x-for="(artist,index) in track.artists">
+                        <span x-text="artist.name + (index !== track.artists.length - 1 ? ' & ' : '')"></span>
+                    </template>
+
+                </p>
+                <a class="d-block w-100" :href="`/album-tracks.html#album_id/${track.id}`"><button
+                        class="Htunes-btn w-100"><span>Get</span></button></a>
+            </div>
+
+
+        </div>
+
+    </template>
+</div> -->
 
 
 
-    <!-- <script>
-        AOS.init();
-    </script> -->
-
-    <!-- <script src="https://sdk.scdn.co/spotify-player.js"></script> -->
     <script src="./js/routie.min.js"></script>
-    <!-- <script src="https://open.spotify.com/embed-podcast/iframe-api/v1"></script> -->
 
     <script src="./js/custom.js"></script>
 
-
     <script>
-        /*
-           window.onSpotifyWebPlaybackSDKReady = () => {
-               const token = 'BQBHv3NMc0GL2GbgDnNx5epwaBCHiP6T4B-WaoB1IMJDrdko7jEo_9ddPa_02gRS9L0vGPkZDPa6hxLqbIt11t3IcWR4xhgJcdmjISqpC0HRYioidX3iCRxwxDtZih9iVm6KL8r1VVxV-95rJWtzzNhF3ue9CVjGeEW480eaRhWkowjuHIhJJPmuICSe2yatj8KedC21X1zRZFG5WgQojWc57sTOF-oS';
-               const player = new Spotify.Player({
-                   name: 'Web Playback SDK Quick Start Player',
-                   getOAuthToken: cb => { cb(token); },
-                   volume: 0.5
-               });
-   
-               // Ready
-               player.addListener('ready', ({ device_id }) => {
-                   console.log('Ready with Device ID', device_id);
-               });
-   
-               // Not Ready
-               player.addListener('not_ready', ({ device_id }) => {
-                   console.log('Device ID has gone offline', device_id);
-               });
-   
-               player.addListener('initialization_error', ({ message }) => {
-                   console.error(message);
-               });
-   
-               player.addListener('authentication_error', ({ message }) => {
-                   console.error(message);
-               });
-   
-               player.addListener('account_error', ({ message }) => {
-                   console.error(message);
-               });
-   
-               document.getElementById('togglePlay').onclick = function () {
-                   console.log(player)
-                   console.log(player.togglePlay)
-                   player.togglePlay();
-               };
-   
-               player.connect();
-           }
-   */
 
+        var album_id;
+        routie({
 
-        window.onSpotifyIframeApiReady = (IFrameAPI) => {
-            console.log("Running");
-            const element = document.getElementById('embed-iframe');
-            const options = {
-                uri: 'https://open.spotify.com/album/5kE2OAuUYGBqqzscqgBXXf'
-            };
-            const callback = (EmbedController) => { };
-            IFrameAPI.createController(element, options, callback);
+            'album_id/:id': function (id) {
+                album_id = id;
+            },
+        });
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('music', () => ({
+                tracks: [],
+                init() {
+                    var current = this
+                    getSpotifyData('https://api.spotify.com/v1/browse/new-releases?limit=50', function (data) {
+                        current.tracks = data.albums.items
+                        console.log(data)
+                        let loader = document.getElementById("loader");
+                        loader.style.display = "none";
 
-            
-        };
+                    })
+                }
+            }))
+        })
+
     </script>
-
-
 
 </body>
 

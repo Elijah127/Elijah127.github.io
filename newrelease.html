@@ -38,7 +38,11 @@
             <button class="navbar-toggler text-white p-2" type="button" data-mdb-toggle="collapse"
                 data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
-                <i class="fas fa-bars fs-3"></i>
+                <div class="menu-bar-container" onclick="myFunction(this)">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                  </div>
             </button>
 
             <!-- Collapsible wrapper -->
@@ -121,7 +125,7 @@
         style="flex-wrap: wrap; justify-content: center !important;">
         <template x-for="track in tracks">
             <div class="top-songs-cards htunes-cards p-2 pt-0 rounded ms-4 mt-3 mb-3">
-                <img :src="track.images[1].url" class="rounded" alt="" width="245px">
+                <img :src="track.images[1].url" class="rounded imgs" alt="" width="245px">
                 <div
                     class=" h-100 justify-content-around d-flex  flex-column top-songs-cards-text htunes-cards-text mt-3 w-100">
                     <h3 class="text-white" x-text="track.name"></h3>
@@ -272,6 +276,14 @@
         })
 
     </script>
+
+<script>
+    function myFunction(x) {
+      x.classList.toggle("change");
+    }
+    </script>
+  
+
 </body>
 
 </html>

@@ -14,7 +14,6 @@ async function spotifyapi() {
   window.localStorage.setItem("token", data.access_token);
 }
 
-
 async function getSpotifyData(url, func) {
   if (localStorage.getItem("token")) {
     let response = await fetch(url, {
@@ -24,15 +23,15 @@ async function getSpotifyData(url, func) {
     });
     let data = await response.json();
     console.log(data);
-    if(data?.error?.status == 401){
+    if (data?.error?.status == 401) {
       console.log("401 occured");
       await spotifyapi();
-    getSpotifyData(url,func);
+      getSpotifyData(url, func);
     }
     func(data);
-  }else{
+  } else {
     await spotifyapi();
-    getSpotifyData(url,func);
+    getSpotifyData(url, func);
   }
 }
 
@@ -40,7 +39,7 @@ var embedController;
 window.onSpotifyIframeApiReady = (IFrameAPI) => {
   const element = document.getElementById("embed-iframe");
   const options = {
-    uri: "https://open.spotify.com/album/5kE2OAuUYGBqqzscqgBXXf",
+    uri: "",
   };
   callback = (EmbedController) => {
     embedController = EmbedController;
@@ -73,7 +72,7 @@ function convertMillisecondsToMinutesAndSeconds(milliseconds) {
 
   return {
     minutes,
-    seconds
+    seconds,
   };
 }
 
@@ -264,6 +263,7 @@ document.addEventListener("alpine:init", () => {
   }));
 });
 
+// search All
 document.addEventListener("alpine:init", () => {
   Alpine.data("searchOptions", () => ({
     items: {},
@@ -502,7 +502,8 @@ document.addEventListener("alpine:init", () => {
             let albumtrack = current.artistAlbumtrack[i];
             let trackTime = albumtrack.duration_ms;
 
-            const { minutes, seconds } = convertMillisecondsToMinutesAndSeconds(trackTime);
+            const { minutes, seconds } =
+              convertMillisecondsToMinutesAndSeconds(trackTime);
 
             // console.log(trackSec);
             albumtrack.trackMins = minutes;
@@ -580,7 +581,8 @@ document.addEventListener("alpine:init", () => {
             let albumtrack = current.track[i];
             albumtrack = albumtrack.track;
             let trackTime = albumtrack.duration_ms;
-            const { minutes, seconds } = convertMillisecondsToMinutesAndSeconds(trackTime);
+            const { minutes, seconds } =
+              convertMillisecondsToMinutesAndSeconds(trackTime);
 
             // console.log(trackSec);
             albumtrack.trackMins = minutes;
