@@ -280,10 +280,24 @@ h6 {
   text-align: center;
 }
 
+.home-page-cards {
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}
+.home-page-cards-text {
+  text-align: center;
+}
+
 @media screen and (max-width: 600px) {
   .htunes-cards {
     margin-left: 12px !important;
     max-width: 200px;
+  }
+  .home-page-cards{
+    margin-left: 12px !important;
   }
   .top-songs-cards-text {
     font-size: small;

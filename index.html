@@ -189,10 +189,10 @@
 
     <div class="all-cards-container  mt-3 d-flex justify-content-center" data-aos="fade-right" x-data="music">
       <template x-for="track in tracks">
-        <div class="top-songs-cards htunes-cards p-2 pt-0 rounded ms-4 mt-3 mb-3">
+        <div class="top-songs-cards home-page-cards p-2 pt-0 rounded ms-4 mt-3 mb-3">
           <img :src="track.images[1].url" class="rounded" alt="" width="245px">
           <div
-            class=" h-100 justify-content-around d-flex  flex-column top-songs-cards-text htunes-cards-text mt-3 w-100">
+            class=" h-100 justify-content-around d-flex  flex-column top-songs-cards-text home-page-cards-text mt-3 w-100">
             <h3 class="text-white" x-text="track.name"></h3>
 
             <p class="text-white">
@@ -224,9 +224,9 @@
     <div class="all-cards-container  mt-3 d-flex justify-content-center " data-aos="fade-left" x-data="albums">
 
       <template x-for="track in tracks">
-        <div class="  htunes-cards p-2 pt-0 rounded ms-4 mt-3 mb-3">
+        <div class="home-page-cards p-2 pt-0 rounded ms-4 mt-3 mb-3">
           <img :src="track.images[1].url" class="rounded" alt="" width="245px">
-          <div class=" htunes-cards-text mt-3 w-100">
+          <div class="home-page-cards-text mt-3 w-100">
             <h3 class="text-white" x-text="track.name"></h3>
             <p class="text-white">
               <template x-for="(artist,index) in track.artists">
@@ -256,9 +256,9 @@
       id="playlists">
 
       <template x-for="playlist in playlists ">
-        <div class=" justify-content-around  htunes-cards p-2 pt-0 rounded ms-4 mt-3 mb-3">
+        <div class=" justify-content-around home-page-cards p-2 pt-0 rounded ms-4 mt-3 mb-3">
           <img :src="playlist.images[0].url" class="rounded" alt="" width="245px">
-          <div class=" htunes-cards-text mt-3 w-100">
+          <div class="home-page-cards-text mt-3 w-100">
             <h3 class="text-white" x-text="playlist.name"></h3>
             <p class="text-white" x-text="playlist.description" style="word-break: break-all;"></p>
             <div>
@@ -471,10 +471,10 @@
     AOS.init();
   </script>
 
-<script>
-  function myFunction(x) {
-    x.classList.toggle("change");
-  }
+  <script>
+    function myFunction(x) {
+      x.classList.toggle("change");
+    }
   </script>
 
 </body>
