@@ -262,9 +262,9 @@
             <p></p>
             <template x-for="Track in items">
                 <div class="top-songs-cards htunes-cards p-2 pt-0 rounded ms-4 mt-3 mb-3">
-                    <img :src="Track.images && Track.images[1].url" class="rounded" alt="" width="245px">
+                    <img :src="Track.images && Track.images[1].url" class="rounded imgs" alt="" width="245px">
                     <div
-                        class=" h-100 justify-content-around d-flex  flex-column top-songs-cards-text htunes-cards-text mt-3 w-100">
+                        class=" h-100 justify-content-around d-flex  flex-column top-songs-cards-text htunes-cards-text mt-auto pt-3  w-100">
                         <h5 class="text-white" x-text="Track.name"></h5>
 
                         <p class="text-white">

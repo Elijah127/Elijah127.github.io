@@ -124,7 +124,7 @@
         <template x-for="playlist in playlists ">
             <div class="justify-content-around  htunes-cards p-2 pt-0 rounded ms-4 mt-3 mb-3">
                 <img :src="playlist.images[0].url" class="rounded imgs" alt="" width="245px">
-                <div class=" htunes-cards-text mt-3 w-100">
+                <div class=" htunes-cards-text mt-auto pt-3 w-100">
                     <h3 class="text-white" x-text="playlist.name"></h3>
 
                     <p class="text-white" x-text="playlist.description" style="word-break: break-all;"></p>
