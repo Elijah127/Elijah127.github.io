@@ -123,7 +123,7 @@
                     <div class="bar1"></div>
                     <div class="bar2"></div>
                     <div class="bar3"></div>
-                  </div>
+                </div>
             </button>
 
             <!-- Collapsible wrapper -->
@@ -154,8 +154,8 @@
                     <div x-data="{open : false}">
                         <form class="d-flex input-group w-auto form-search">
                             <input type="search" id="search-form" x-model='query' class="form-control rounded"
-                                @keyup="query.length < 1 ? open=false : open=true" placeholder="Search artist" aria-label="Search"
-                                aria-describedby="search-addon">
+                                @keyup="query.length < 1 ? open=false : open=true" placeholder="Search artist"
+                                aria-label="Search" aria-describedby="search-addon">
                             <span class="input-group-text text-white border-0" id="search-addon">
                                 <i class="fas fa-search"></i>
                             </span>
@@ -167,7 +167,8 @@
                             <template x-for="artist in artists">
                                 <div class=" w-100 search-content-container" x-show="open"
                                     @click.outside="open = false">
-                                    <a @click='location.href = `/artistprofile.html#artistProfile_id/${artist.id}`; location.reload();' class="d-flex">
+                                    <a @click='location.href = `/artistprofile.html#artistProfile_id/${artist.id}`; location.reload();'
+                                        class="d-flex">
                                         <img :src="artist.images[1].url " class="search-imgs" class="rounded">
                                         <div class="search-content-text">
                                             <h5 class="text-white" x-text="artist.name"></h5>
@@ -302,107 +303,17 @@
         AOS.init();
     </script>
 
-    <!-- <script>
-        var title = document.getElementById("title");
-        var artist_track = document.getElementById("artist-track");
-        var artist_albmus = document.getElementById("artist-albmus");
-
-        // artist_track.onclick = function () {
-        //     title.innerHTML = "Tracks"
-        // }
-
-
-        // artist_albmus.onclick = function () {
-        //     title.innerHTML = "Album"
-        // }
-
-
-
-    </script> -->
-
-
 
     <div class="loader" id="loader">
         <?xml version="1.0" encoding="utf-8"?>
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            style="margin: auto; display: block; shape-rendering: auto;" width="200px" height="200px"
-            viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-            <g transform="rotate(0 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(30 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(60 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s"
-                        repeatCount="indefinite">
-                    </animate>
-                </rect>
-            </g>
-            <g transform="rotate(90 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(120 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(150 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s"
-                        repeatCount="indefinite">
-                    </animate>
-                </rect>
-            </g>
-            <g transform="rotate(180 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(210 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(240 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s"
-                        repeatCount="indefinite">
-                    </animate>
-                </rect>
-            </g>
-            <g transform="rotate(270 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(300 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(330 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s"
-                        repeatCount="indefinite">
-                    </animate>
-                </rect>
-            </g>
+            style="margin: auto; background: rgb(241, 242, 243); display: block; shape-rendering: auto;" width="104px"
+            height="104px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <circle cx="50" cy="50" fill="none" stroke="#1d0e0b" stroke-width="5" r="35"
+                stroke-dasharray="164.93361431346415 56.97787143782138">
+                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s"
+                    values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+            </circle>
             <!-- [ldio] generated by https://loading.io/ -->
         </svg>
 
@@ -410,10 +321,10 @@
 
     <script>
         function myFunction(x) {
-          x.classList.toggle("change");
+            x.classList.toggle("change");
         }
-        </script>
-      
+    </script>
+
 
 </body>
 

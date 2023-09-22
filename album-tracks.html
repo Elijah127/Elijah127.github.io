@@ -19,6 +19,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
         <!--animate on scroll-->
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+        <link rel="stylesheet" href="assests/css/iziToast.min.css">
         <!--alpine js-->
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
@@ -142,6 +144,13 @@
             color: white !important;
         }
 
+        .add-to-playlisy {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white !important;
+        }
+
         .openmodal {
             position: fixed;
             right: 30px;
@@ -163,10 +172,34 @@
                 width: 100% !important;
             }
         }
+
+        .iframe-loader {
+            border: 4px solid rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 50px auto;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            z-index: -1;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
-<body>
+<body x-data="{Trackuri: ''}">
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light p-3 shadow-5">
@@ -184,7 +217,7 @@
                     <div class="bar1"></div>
                     <div class="bar2"></div>
                     <div class="bar3"></div>
-                  </div>
+                </div>
             </button>
 
             <!-- Collapsible wrapper -->
@@ -253,7 +286,7 @@
 
                             </a>
 
-                            <div class="play-album-btn ms-2" id="open-modal">
+                            <div x-cloak class="play-album-btn ms-2" id="open-modal">
                                 <button id="album-play-btn" data-mdb-toggle="modal" data-mdb-target="#exampleModal"
                                     class="gradient-btn" @click="playMusic(artistAlbum.uri)">
                                     <i class="fas fa-play text-white"></i>
@@ -284,13 +317,14 @@
             <div class="mt-5">
                 <ol class="text-white">
                     <template x-for="track in artistAlbumtrack">
-                        <li class="m-3 Al-track " @click="playMusic(track.uri)" data-mdb-toggle="modal"
-                            data-mdb-target="#exampleModal">
+                        <li class="m-3 Al-track " @click="playMusic(track.uri); Trackuri = track.uri;"
+                            data-mdb-toggle="modal" data-mdb-target="#exampleModal">
                             <div class="d-flex">
                                 <h5 class="m-0 text-white" x-text="track.name"></h5>
                                 <div class="ms-auto" style="white-space: nowrap;">
                                     <span class="ms-auto" x-text="track.trackMins"></span>:
                                     <span class="ms-auto" x-text="track.trackSec"></span>
+
                                 </div>
                             </div>
                             <i class="fas fa-circle-play ms-auto"></i>
@@ -316,97 +350,55 @@
     <div class="loader" id="loader">
         <?xml version="1.0" encoding="utf-8"?>
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            style="margin: auto; display: block; shape-rendering: auto;" width="200px" height="200px"
-            viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-            <g transform="rotate(0 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(30 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(60 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s"
-                        repeatCount="indefinite">
-                    </animate>
-                </rect>
-            </g>
-            <g transform="rotate(90 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(120 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(150 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s"
-                        repeatCount="indefinite">
-                    </animate>
-                </rect>
-            </g>
-            <g transform="rotate(180 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(210 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(240 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s"
-                        repeatCount="indefinite">
-                    </animate>
-                </rect>
-            </g>
-            <g transform="rotate(270 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(300 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s"
-                        repeatCount="indefinite"></animate>
-                </rect>
-            </g>
-            <g transform="rotate(330 50 50)">
-                <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1252d2">
-                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s"
-                        repeatCount="indefinite">
-                    </animate>
-                </rect>
-            </g>
+            style="margin: auto; background: rgb(241, 242, 243); display: block; shape-rendering: auto;" width="104px"
+            height="104px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <circle cx="50" cy="50" fill="none" stroke="#1d0e0b" stroke-width="5" r="35"
+                stroke-dasharray="164.93361431346415 56.97787143782138">
+                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s"
+                    values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+            </circle>
             <!-- [ldio] generated by https://loading.io/ -->
         </svg>
 
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" x-data="MyPlaylists" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content bg-transparent">
-                <div class="modal-body">
+                <div class="modal-body" style="position: relative;">
+                    <div class="addsong-btn-container">
+                        <div class="dropdown">
+                            <button class="dropdown-toggle btn btn-link text-light" type="button"
+                                id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
+                                Add to playlist
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background: #333333;">
+                                <li style="background: #333333;"><a class="dropdown-item playlist-dropdown" href="#">
+                                        <template x-for="myplaylist in items">
+                                            <a @click="addToPlaylist(myplaylist.id,Trackuri)"
+                                                class="d-flex flex-column mb-2 text-white">
+                                                <div class="d-flex">
+                                                    <img :src="myplaylist.images[0].url" width="80" height="80">
+                                                    <div class="ms-2">
+                                                        <span class="fs-6" x-text="myplaylist.name"></span><br>
+                                                        <p class="fs-6" x-text="myplaylist.description"></p>
+                                                    </div>
+                                                </div>
+
+                                            </a>
+                                        </template>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
                     <i class="fas fa-xmark text-white fs-4 ms-auto close-btn" data-mdb-dismiss="modal"></i>
 
+
                     <div id="embed-iframe"></div>
+                    <div id="iframe-loader" class="iframe-loader"></div>
 
                 </div>
 
@@ -427,16 +419,18 @@
 
     <script src="https://open.spotify.com/embed-podcast/iframe-api/v1"></script>
 
+    <script src="js/iziToast.min.js"></script>
+
     <script src="./js/custom.js"></script>
 
 
 
     <script>
         function myFunction(x) {
-          x.classList.toggle("change");
+            x.classList.toggle("change");
         }
-        </script>
-      
+    </script>
+
 
 </body>
 

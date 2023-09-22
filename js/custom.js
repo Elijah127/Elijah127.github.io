@@ -1,8 +1,28 @@
 const maindata = {
   grant_type: "client_credentials",
-  client_id: "7fa68817dd85470c8f4715b21f131d30",
-  client_secret: "dff7c9fcf7fc4758b0f4e065fef93009",
+  client_id: "ca50887d25574b2fa3dfc59d08602698",
+  client_secret: "e557238d9b2b476e9c5db4cd90044997",
 };
+
+async function userspotifyapi() {
+  const auth_data =
+    "ca50887d25574b2fa3dfc59d08602698" +
+    ":" +
+    "e557238d9b2b476e9c5db4cd90044997";
+  let response = await fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    body: new URLSearchParams({
+      grant_type: "refresh_token",
+      refresh_token: window.localStorage.getItem("refresh_token"),
+    }),
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Basic " + btoa(auth_data),
+    },
+  });
+  let data = await response.json();
+  window.localStorage.setItem("user_token", data.access_token);
+}
 
 async function spotifyapi() {
   let response = await fetch("https://accounts.spotify.com/api/token", {
@@ -12,6 +32,45 @@ async function spotifyapi() {
   });
   let data = await response.json();
   window.localStorage.setItem("token", data.access_token);
+}
+
+function generateRandomState() {
+  const state =
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15);
+  window.localStorage.setItem("state", state);
+  return state;
+}
+
+const oauthState = generateRandomState();
+
+const signInWithSpotify = () => {
+  window.location.href =
+    "https://accounts.spotify.com/authorize?response_type=code&client_id=ca50887d25574b2fa3dfc59d08602698&scope=playlist-modify-public playlist-modify-private playlist-read-private&redirect_uri=http://127.0.0.1:5500/authorize.html&state=" +
+    generateRandomState();
+};
+
+async function getUserSpotifyData(url, func) {
+  if (localStorage.getItem("user_token")) {
+    let response = await fetch(url, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("user_token"),
+      },
+    });
+    let data = await response.json();
+    console.log(data);
+    if (data?.error?.status == 401) {
+      console.log("401 occured");
+      await userspotifyapi();
+
+      getUserSpotifyData(url, func);
+    }
+    func(data);
+  } else {
+    await userspotifyapi();
+
+    getUserSpotifyData(url, func);
+  }
 }
 
 async function getSpotifyData(url, func) {
@@ -26,15 +85,19 @@ async function getSpotifyData(url, func) {
     if (data?.error?.status == 401) {
       console.log("401 occured");
       await spotifyapi();
+
       getSpotifyData(url, func);
     }
     func(data);
   } else {
     await spotifyapi();
+
     getSpotifyData(url, func);
   }
 }
-
+// let iframe_loader = document.getElementById("iframe-loader")
+// iframe_loader.style.display ="none"
+//   console.log(iframe_loader)
 var embedController;
 window.onSpotifyIframeApiReady = (IFrameAPI) => {
   const element = document.getElementById("embed-iframe");
@@ -45,6 +108,7 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
     embedController = EmbedController;
   };
   IFrameAPI.createController(element, options, callback);
+ 
 };
 
 var playlist_id;
@@ -75,6 +139,14 @@ function convertMillisecondsToMinutesAndSeconds(milliseconds) {
     seconds,
   };
 }
+
+document.addEventListener("alpine:init", () => {
+  if (window.localStorage.getItem("logged_in") === "yes") {
+    getUserSpotifyData("https://api.spotify.com/v1/me", function (data) {
+      window.localStorage.setItem("user_id", data.id);
+    });
+  }
+});
 
 // new releases
 document.addEventListener("alpine:init", () => {
@@ -565,6 +637,10 @@ document.addEventListener("alpine:init", () => {
     track: {},
     playlist: {},
     cover_image: "",
+    checkUserOwnedPlaylist(){
+      return this.playlist.owner.id === localStorage.getItem("user_id");
+    },
+   
     init() {
       console.log("Playlist tracks");
       var current = this;
@@ -604,13 +680,16 @@ document.addEventListener("alpine:init", () => {
       );
     },
     playMusic(uri) {
+      
       if (uri != this.current_uri) {
         embedController.loadUri(uri);
+        
       }
       let openModel = document.getElementById("open-modal");
       openModel.style.display = "block";
       this.current_uri = uri;
       console.log(openModel, "displayed");
+      
     },
   }));
 });
@@ -632,4 +711,161 @@ document.addEventListener("alpine:init", () => {
   }));
 });
 
-// sportify iframe
+function searchplaytrackDP() {
+  var custom_search_form = document.getElementById("custom-search-form");
+var custom_search_dropdown = document.getElementById("custom-search-dropdown");
+custom_search_form.onkeyup= function() {
+  custom_search_dropdown.style.height = "500px";
+  if(custom_search_form.value < 1){
+    custom_search_dropdown.style.height = "0px"
+  }
+}
+}
+
+
+
+
+// remove songs from playlist
+function RemoveSongFromPlaylist(playlisttrackURI) {
+  console.log(playlisttrackURI);
+  const removeSOngs = {
+    tracks: [
+      {
+        uri: `${playlisttrackURI}`,
+      },
+    ],
+  };
+
+  console.log(JSON.stringify(removeSOngs));
+  // data-mdb-toggle="modal"
+
+  fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("user_token"),
+    },
+    // data-mdb-toggle="modal"
+    body: JSON.stringify(removeSOngs),
+  })
+    .then((response) => response.json())
+    .then((Removesong) => {
+      console.log(Removesong);
+    });
+  window.location.reload();
+}
+
+//my playlists
+document.addEventListener("alpine:init", () => {
+  Alpine.data("MyPlaylists", () => ({
+    items: [],
+    init() {
+      var current = this;
+      getUserSpotifyData(
+        "https://api.spotify.com/v1/me/playlists?limit=50",
+        function (data) {
+          current.items = data.items;
+          console.log(data, "myplaylist");
+        }
+      );
+    },
+    addToPlaylist(PlayListID, TrackURI) {
+      console.log(TrackURI);
+      
+      // add song to playlist
+      function AddPlaylistSong() {
+        const addedSongs = {
+          uris: [`${TrackURI}`],
+          position: 0,
+        };
+        fetch(`https://api.spotify.com/v1/playlists/${PlayListID}/tracks`, {
+          method: "post",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("user_token"),
+          },
+          body: JSON.stringify(addedSongs),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            if (data.error) {
+              iziToast.error({
+                title: "Error",
+                message: "Cannot add to playlist.",
+              });
+            } else {
+              iziToast.success({
+                title: "Successful",
+                message: "Playlist has been added.",
+              });
+            }
+          })
+          .catch((error) => {
+            iziToast.error({
+              title: "Error",
+              message: "An error occured. Check internet and try again",
+            });
+          });
+      }
+      AddPlaylistSong();
+    },
+    
+  }));
+});
+
+// search track add to playlist
+document.addEventListener("alpine:init", () => {
+  Alpine.data("Addsearchtoplaylist", () => ({
+    items: [],
+    init() {
+      var current = this;
+      getUserSpotifyData(
+        "https://api.spotify.com/v1/me/playlists?limit=50",
+        function (data) {
+          current.items = data.items;
+          console.log(data, "myplaylist");
+        }
+      );
+    },
+    addSearchTrackToPL(TrackURI) {
+      console.log(TrackURI);
+
+      // add song to playlist
+      const addedSongs = {
+        uris: [`${TrackURI}`],
+        position: 0,
+      };
+      setTimeout(function() {
+        window.location.reload();
+      }, 2000); // 2000 milliseconds = 2 seconds
+      fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
+        method: "post",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("user_token"),
+        },
+        body: JSON.stringify(addedSongs),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.error) {
+            iziToast.error({
+              title: "Error",
+              message: "Cannot add to playlist.",
+            });
+          } else {
+            iziToast.success({
+              title: "Successful",
+              message: "Playlist has been added.",
+            });
+          }
+        })
+        .catch((error) => {
+          iziToast.error({
+            title: "Error",
+            message: "An error occured. Check internet and try again",
+          });
+        });
+
+    },
+  }));
+});

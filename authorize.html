@@ -23,61 +23,6 @@
 
     <link href="./assests/css/style.css" rel="stylesheet">
 
-
-    <style>
-        .paralax {
-            background-image: url("assests/img/header-img.jpg");
-            width: 100%;
-            background-repeat: no-repeat;
-            background-position: center;
-            height: 400px;
-            background-attachment: fixed;
-        }
-
-        .paralax-content-container {
-            padding-left: 50px;
-        }
-
-        .content-width {
-            max-width: 700px;
-        }
-
-        .form-bg {
-            background: black;
-            padding: 100px;
-        }
-
-        @media screen and (max-width:672px) {
-            .paralax {
-                background-image: url("assests/img/header-img.png");
-                height: 350px;
-            }
-
-            .paralax-content-container {
-                position: absolute;
-            }
-
-            .form-bg {
-                padding: 0;
-            }
-        }
-
-        @media screen and (max-width:400px) {
-            .paralax {
-                height: 400px;
-            }
-
-            .btn-container>a>button {
-                width: 100%;
-            }
-
-            .contact-btn>button {
-                margin-top: 10px;
-                margin-left: 0 !important;
-            }
-
-        }
-    </style>
 </head>
 
 <body>
@@ -135,101 +80,11 @@
     <!-- Navbar -->
 
 
-
-    <div class="paralax">
-        <div class="content-width">
-            <div class="paralax-content-container container pt-5">
-                <h1 class="text-white">About Us</h1>
-                <p class="text-white">
-                    Welcome to Htunes, where melodies and technology converge to create a symphony of
-                    sonic wonders. We are a group of music enthusiasts who embarked on a journey to redefine how you
-                    experience and immerse yourself in the realm of music, powered by the Spotify API.
-                </p>
-
-                <div class="btn-container">
-                    <a href="https://open.spotify.com/?">
-                        <button class="gradient-btn"><i class="me-2 fab fa-spotify"></i>Spotify</button>
-                    </a>
-                    <a class="contact-btn" href="#ContactUs">
-                        <button class="Htunes-btn ms-2"><span> <i class="me-2 fas fa-comment"></i>Contact
-                                Us</span></button>
-                    </a>
-                </div>
-            </div>
-        </div>
-
+    <div>
+        <h1 style="font-size: 50px; color: white; text-align: center; margin-top: 25px;">
+            Authentication on progress.....
+        </h1>
     </div>
-
-
-
-    <div class="d-flex justify-content-center mt-5">
-        <h1 class="text-white ">Why use our services ?</h1>
-    </div>
-
-    <div class="d-flex mt-3 " style="flex-wrap:wrap; justify-content: space-evenly; ">
-        <div class="d-flex align-items-center flex-column p-5">
-            <img src="./assests/img/high-quality-audio-img.webp" style="max-width: 150px;">
-            <div class="mt-3">
-                <h3 class="text-white text-center">High quality audio</h3>
-                <p class="text-white text-center">Enjoy the full range of sound.</p>
-            </div>
-        </div>
-
-        <div class="d-flex align-items-center flex-column p-5">
-            <img src="./assests/img/no ads-img.webp" style="max-width: 150px;">
-            <div class="mt-3">
-                <h3 class="text-white text-center">NO ads</h3>
-                <p class="text-white text-center">Enjoy nonstop music.</p>
-            </div>
-        </div>
-
-        <div class="d-flex align-items-center flex-column p-5">
-            <img src="./assests/img/unlimited skips-img.webp" style="max-width: 150px;">
-            <div class="mt-3">
-                <h3 class="text-white text-center">unlimited skips</h3>
-                <p class="text-white text-center">Just tap skip</p>
-            </div>
-        </div>
-
-    </div>
-
-
-
-
-    <div class="form-bg" id="ContactUs">
-        <div class="d-flex justify-content-center pt-3">
-            <h1 class="text-white ">Send us a message ?</h1>
-        </div>
-
-        <div class="container mt-5">
-            <form>
-                <!-- Name input -->
-                <div class="form-outline mb-4">
-                    <input type="text" id="form4Example2" class="form-control" />
-                    <label class="form-label text-white" for="form4Example1">Name</label>
-                </div>
-
-                <!-- Email input -->
-                <div class="form-outline mb-4">
-                    <input type="email" id="form4Example2" class="form-control" />
-                    <label class="form-label text-white" for="form4Example2">Email address</label>
-                </div>
-
-                <!-- Message input -->
-                <div class="form-outline mb-4">
-                    <textarea class="form-control" id="form4Example3" rows="4"></textarea>
-                    <label class="form-label text-white" for="form4Example3">Message</label>
-                </div>
-
-
-                <!-- Submit button -->
-                <button type="submit" class="gradient-btn btn-block mb-2"><span>Send</span></button>
-            </form>
-        </div>
-
-    </div>
-
-
 
 
     <!-- Footer -->
@@ -322,25 +177,47 @@
     <!-- Footer -->
 
 
-   
+
 
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
-    <script src="./js/routie.min.js"></script>
-
-    <script src="./js/custom.js"></script>
 
     <script>
-        AOS.init();
-    </script>
+        const urlparams = window.location.search;
+        const urlsearchparams = new URLSearchParams(urlparams);
+        const code = urlsearchparams.get("code");
+        const state = urlsearchparams.get("state");
 
-    <script>
-        function myFunction(x) {
-            x.classList.toggle("change");
+        const maindata = {
+            code: code,
+            redirect_uri: "http://127.0.0.1:5500/authorize.html",
+            grant_type: 'authorization_code'
         }
+
+        const auth_data = ("ca50887d25574b2fa3dfc59d08602698" + ':' + "e557238d9b2b476e9c5db4cd90044997");
+
+        async function getToken() {
+            let response = await fetch("https://accounts.spotify.com/api/token", {
+                method: "POST",
+                body: new URLSearchParams(maindata),
+                headers: { 
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    'Authorization': 'Basic ' + btoa(auth_data)
+             },
+            });
+            let data = await response.json();
+            console.log(data);
+            window.localStorage.setItem("user_token", data.access_token);
+            window.localStorage.setItem("refresh_token", data.refresh_token);
+            window.localStorage.setItem("logged_in", 'yes');
+
+            window.location.href = "http://127.0.0.1:5500";
+        }
+
+        getToken();
     </script>
 
 
