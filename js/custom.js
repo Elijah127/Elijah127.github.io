@@ -46,7 +46,7 @@ const oauthState = generateRandomState();
 
 const signInWithSpotify = () => {
   window.location.href =
-    "https://accounts.spotify.com/authorize?response_type=code&client_id=ca50887d25574b2fa3dfc59d08602698&scope=playlist-modify-public playlist-modify-private playlist-read-private&redirect_uri=http://127.0.0.1:5500/authorize.html&state=" +
+    "https://accounts.spotify.com/authorize?response_type=code&client_id=ca50887d25574b2fa3dfc59d08602698&scope=playlist-modify-public playlist-modify-private playlist-read-private&redirect_uri=https://elijah127.github.io/authorize.html&state=" +
     generateRandomState();
 };
 
@@ -95,9 +95,6 @@ async function getSpotifyData(url, func) {
     getSpotifyData(url, func);
   }
 }
-// let iframe_loader = document.getElementById("iframe-loader")
-// iframe_loader.style.display ="none"
-//   console.log(iframe_loader)
 var embedController;
 window.onSpotifyIframeApiReady = (IFrameAPI) => {
   const element = document.getElementById("embed-iframe");
