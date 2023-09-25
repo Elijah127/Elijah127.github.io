@@ -102,6 +102,7 @@ h6 {
 .custom-searchdropdown {
   position: absolute;
   top: 60px;
+  width: 350px;
   cursor: pointer;
   /* height: 500px; */
   background: #3c3c3c;
@@ -412,7 +413,7 @@ h6 {
   border-radius: 14px;
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 450px) {
   .Htunes-input {
     width: 300px;
   }
