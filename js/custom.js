@@ -747,8 +747,27 @@ function RemoveSongFromPlaylist(playlisttrackURI) {
     .then((response) => response.json())
     .then((Removesong) => {
       console.log(Removesong);
+         if (Removesong.error) {
+            iziToast.error({
+              title: "Error",
+              message: "Cannot add to playlist.",
+            });
+          } else {
+            iziToast.success({
+              title: "Successful",
+              message: "Playlist has been removed.",
+            });
+          }
+        })
+        .catch((error) => {
+          iziToast.error({
+            title: "Error",
+            message: "An error occured. Check internet and try again",
+          });
     });
-  window.location.reload();
+    setTimeout(function() {
+      window.location.reload();
+    }, 3000); // 3000 milliseconds = 3 seconds
 }
 
 //my playlists

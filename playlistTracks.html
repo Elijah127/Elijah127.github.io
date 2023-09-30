@@ -68,12 +68,12 @@
     }
 
 
-    .close-btn {
+    /* .close-btn {
       position: absolute;
       top: 20px;
       right: 24px;
       color: white !important;
-    }
+    } */
 
     .Al-track:hover {
       padding-left: 10px;
@@ -303,7 +303,8 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content bg-transparent">
         <div class="modal-body" style="position: relative;">
-          <div class="addsong-btn-container">
+          <div class="addsong-btn-container d-flex align-items-center ">
+
             <div class="dropdown">
               <button x-show="!checkUserOwnedPlaylist()" class="dropdown-toggle btn btn-link text-light" type="button"
                 id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
@@ -326,8 +327,9 @@
 
               </ul>
             </div>
+          <i class="fas fa-xmark text-white fs-4  close-btn ms-auto d-flex justify-content-end" data-mdb-dismiss="modal"></i>
+
           </div>
-          <i class="fas fa-xmark text-white fs-4 ms-auto close-btn" data-mdb-dismiss="modal"></i>
           <div id="embed-iframe" style="height: 600px;"></div>
          
             <div id="iframe-loader" class="iframe-loader"></div>
