@@ -109,7 +109,29 @@
         justify-content: center;
 
       }
+
+      .Recently-played-btn {
+        margin-left: -23px;
+      }
     }
+
+    @media screen and (max-width:440px) {
+      .center-input {
+        /* justify-content: start !important; */
+        padding: 0px !important;
+        padding-top: 10px;
+
+      }
+
+      .Htunes-input {
+        width: 220px;
+      }
+
+      .Recently-played-btn{
+        margin-left:-100px;
+      }
+    }
+
     .iframe-loader {
       border: 4px solid rgba(0, 0, 0, 0.3);
       border-radius: 50%;
@@ -119,16 +141,32 @@
       animation: spin 1s linear infinite;
       margin: 50px auto;
       position: absolute;
-      top: 50%;
+      top: 10%;
       left: 50%;
       z-index: -1;
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
- 
+
+    .Recently-played {
+      position: relative;
+      z-index: 4;
+      height: 500px;
+      overflow-y: auto;
+    }
+
+    .Recently-played li {
+      padding: 10px;
+      width: 350px;
+    }
   </style>
 
 </head>
@@ -188,8 +226,6 @@
     <!-- Container wrapper -->
   </nav>
 
-
-
   <div x-data="PlaylistsTracks">
     <div class="playlist-cover-bg">
       <div class="playlist-cover" :style="`background-image: url('${cover_image}')`"></div>
@@ -210,36 +246,68 @@
     </div>
 
     <div class="p-3 center-input d-flex">
-      <div x-data="Addsearchtoplaylist">
-        <div x-data="searchTrack" x-cloak x-show="checkUserOwnedPlaylist()" class="text-white">
-          <div>
-            <div x-data="{open : false}">
-              <form class="d-flex input-group w-auto form-search">
-                <input type="search" class="Htunes-input" onkeyup="searchplaytrackDP()" id="custom-search-form"
-                  x-model='query' @keyup="query.length < 1 ? open=false : open=true" class="form-control rounded"
-                  placeholder="Add track to playlist" aria-label="Search" aria-describedby="search-addon">
-              </form>
-              <div class="mt-1 rounded custom-searchdropdown" id="custom-search-dropdown">
+      <div x-data="Addsearchtoplaylist" x-show="checkUserOwnedPlaylist()">
+        <div class="d-flex formButton-container" x-data="searchTrack" x-cloak x-show="checkUserOwnedPlaylist()"
+          class="text-white">
+          <div x-data="{open : false}">
+            <!-- search input that enable to add tracks to your playlist -->
+            <form class="d-flex input-group w-auto form-search">
+              <input type="search" class="Htunes-input" onkeyup="searchplaytrackDP()" id="custom-search-form"
+                x-model='query' @keyup="query.length < 1 ? open=false : open=true" class="form-control rounded"
+                placeholder="Add track to playlist" aria-label="Search" aria-describedby="search-addon">
+            </form>
+            <div class="mt-1 rounded custom-searchdropdown" id="custom-search-dropdown">
 
-                <template x-for="track in tracks">
-                  <div class=" w-100 search-content-container" @click="addSearchTrackToPL(track.uri)" x-show="open"
-                    @click.outside="open = false">
-                    <div class="d-flex">
-                      <img :src="track.album.images[0].url" class="search-imgs" class="rounded">
-                      <div class="search-content-text">
-                        <h5 class="text-white" x-text="track.name"></h5>
-                        <template x-for="(artist,index) in track.artists">
-                          <span x-text="artist.name + (index !== track.artists.length - 1 ? ' & ' : '')"></span>
-                        </template>
-                        <i class="fas fa-plus"></i>
-                      </div>
+              <template x-for="track in tracks">
+                <div class=" w-100 search-content-container" @click="addSearchTrackToPL(track.uri)" x-show="open"
+                  @click.outside="open = false">
+                  <div class="d-flex">
+                    <img :src="track.album.images[0].url" class="search-imgs rounded">
+                    <div class="search-content-text">
+                      <h5 class="text-white" x-text="track.name"></h5>
+                      <template x-for="(artist,index) in track.artists">
+                        <span class="text-white"
+                          x-text="artist.name + (index !== track.artists.length - 1 ? ' & ' : '')"></span>
+                      </template>
+                      <i class="fas fa-plus text-white"></i>
                     </div>
                   </div>
-                </template>
-              </div>
-
+                </div>
+              </template>
             </div>
 
+          </div>
+          <div x-data="RecentlyPlayed">
+            <div class="dropdown">
+              <button class="Htunes-btn Recently-played-btn" type="button" id="dropdownMenuButton"
+                data-mdb-toggle="dropdown" aria-expanded="false">
+                <span><i class="far fa-clock"></i></span>
+              </button>
+              <ul class="Recently-played  dropdown-menu" aria-labelledby="dropdownMenuButton"
+                style=" background-color: #333333; position: relative; z-index: 4;">
+                <li>
+                  <div class="pb-2">
+                    <h3 class="text-white">Recently played</h3>
+                  </div>
+                  <template x-for="RecentplayedMusic in RecentSongs">
+                    <div @click="addSearchTrackToPL(RecentplayedMusic.track.uri)" class="d-flex pb-3">
+                      <img :src="RecentplayedMusic.track.album.images[0].url" class="search-imgs rounded">
+                      <div class="search-content-text">
+                        <h5 class="text-white" x-text="RecentplayedMusic.track.name"></h5>
+                        <template x-for="(artist,index) in RecentplayedMusic.track.artists">
+                          <span class="text-white"
+                            x-text="artist.name + (index !==  RecentplayedMusic.track.artists.length - 1 ? ' & ' : '')"></span>
+                        </template>
+                        <i class="fas fa-plus text-white"></i>
+                      </div>
+                    </div>
+                  </template>
+                </li>
+
+
+
+              </ul>
+            </div>
           </div>
 
 
@@ -261,16 +329,16 @@
             <li class="m-3 Al-track">
               <div>
                 <div class="d-flex w-100">
-                  <img :src="playlisTtracks.track.album.images[1].url" width="50">
+                  <img :src="playlisTtracks.track?.album.images[1].url" class="rounded" width="50">
                   <div @click="playMusic(playlisTtracks.track.uri); Trackuri = playlisTtracks.track.uri;"
                     data-mdb-toggle="modal" data-mdb-target="#exampleModal" class="ps-2 w-100">
                     <div class="d-flex align-items-center">
-                      <h5 class="m-0 text-white" x-text="playlisTtracks.track.name"></h5>
+                      <h5 class="m-0 text-white" x-text="playlisTtracks.track?.name"></h5>
                       <div class=" d-flex" style="white-space: nowrap;">
                       </div>
                     </div>
                     <i class="fas fa-circle-play"></i>
-                    <template x-for="(artist,index) in playlisTtracks.track.artists">
+                    <template x-for="(artist,index) in playlisTtracks.track?.artists">
                       <span class="fs-6 text-white"
                         x-text="artist.name + (index !== playlisTtracks.track.artists.length - 1 ? ' & ' : '')">
                       </span>
@@ -283,8 +351,8 @@
                     <div @click="RemoveSongFromPlaylist(playlisTtracks.track.uri)" class="text-white"
                       style="position: absolute; right: 10px; border-radius: 4px; padding: 10px; background: #333333; cursor: pointer;"
                       x-show="open" @click.outside="open = false">Remove from playlist</div>
-                    <span class="" x-text="playlisTtracks.track.trackMins"></span>:
-                    <span class="" x-text="playlisTtracks.track.trackSec"></span>
+                    <span class="" x-text="playlisTtracks.track?.trackMins"></span>:
+                    <span class="" x-text="playlisTtracks.track?.trackSec"></span>
                   </div>
 
                 </div>
@@ -299,47 +367,48 @@
     </div>
 
     <div class="modal fade" x-data="MyPlaylists" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content bg-transparent">
-        <div class="modal-body" style="position: relative;">
-          <div class="addsong-btn-container d-flex align-items-center ">
+      aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content bg-transparent">
+          <div class="modal-body" style="position: relative;">
+            <div class="addsong-btn-container d-flex align-items-center ">
 
-            <div class="dropdown">
-              <button x-show="!checkUserOwnedPlaylist()" class="dropdown-toggle btn btn-link text-light" type="button"
-                id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
-                Add to playlist
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background: #333333;">
-                <li style="background: #333333;"><a class="dropdown-item playlist-dropdown" href="#">
-                    <template x-for="myplaylist in items">
-                      <a @click="addToPlaylist(myplaylist.id,Trackuri)" class="d-flex flex-column mb-2 text-white">
-                        <div class="d-flex">
-                          <img :src="myplaylist.images[0].url" width="80" height="80">
-                          <div class="ms-2">
-                            <span class="fs-6" x-text="myplaylist.name"></span><br>
-                            <p class="fs-6" x-text="myplaylist.description"></p>
+              <div class="dropdown">
+                <button x-show="!checkUserOwnedPlaylist()" class="dropdown-toggle btn btn-link text-light" type="button"
+                  id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
+                  Add to playlist
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background: #333333;">
+                  <li style="background: #333333;"><a class="dropdown-item playlist-dropdown" href="#">
+                      <template x-for="myplaylist in items">
+                        <a @click="addToPlaylist(myplaylist.id,Trackuri)" class="d-flex flex-column mt-2 text-white">
+                          <div class="d-flex">
+                            <img :src="myplaylist.images[0].url" width="60" height="60" class="rounded">
+                            <div class="ms-2">
+                              <span class="fs-6" x-text="myplaylist.name"></span><br>
+                              <p class="fs-6" x-text="myplaylist.description"></p>
+                            </div>
                           </div>
-                        </div>
-                      </a>
-                    </template>
-                </li>
+                        </a>
+                      </template>
+                  </li>
 
-              </ul>
+                </ul>
+              </div>
+              <i class="fas fa-xmark text-white fs-4  close-btn ms-auto d-flex justify-content-end"
+                data-mdb-dismiss="modal"></i>
+
             </div>
-          <i class="fas fa-xmark text-white fs-4  close-btn ms-auto d-flex justify-content-end" data-mdb-dismiss="modal"></i>
+            <div id="embed-iframe" style="height: 600px;"></div>
 
-          </div>
-          <div id="embed-iframe" style="height: 600px;"></div>
-         
             <div id="iframe-loader" class="iframe-loader"></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
   </div>
-  
+
 
 
 
@@ -359,7 +428,7 @@
 
   </div>
 
-  
+
 
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>

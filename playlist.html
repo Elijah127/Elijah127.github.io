@@ -145,6 +145,7 @@
 
 
     }
+    
 </style>
 
 <body>
@@ -174,9 +175,7 @@
 
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
+                   
                     <li class="nav-item">
                         <a class="nav-link" href="albums.html">Albums</a>
                     </li>
@@ -189,6 +188,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="about.html">About us</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  onclick="toggleSidebar()">My Playlist</a>
+                    </li>
+                    <li class="nav-item">
+                        <button style="padding: 6px 16px 6px 16px; margin-left: 10px;" x-data x-show="window.localStorage.getItem('logged_in')=== 'yes'" class="gradient-btn "
+                        type="button" data-mdb-toggle="modal" data-mdb-target="#bottomLeftModal">
+                        create playlist
+                        <i class="fs-6 fas fa-circle-plus"></i>
+                    </button>
+                    </li>
+
 
                 </ul>
                 <!-- Left links -->
@@ -241,32 +251,39 @@
 
     <!-- side bar -->
 
-    <button type="button" class="btn remove-hover btn-link text-white" data-mdb-ripple-color="dark" x-data x-cloak
-        id="siderbar-btn" onclick="toggleSidebar()" style="position: absolute; margin-top: 5px; ">
-        <span class="fs-4">Playlist</span> <i class="fas fa-angle-right fs-4"></i>
-    </button>
-
+   
     <div x-data="MyPlaylists" sidebarjs>
-        <h1 class="text-center mt-4 mb-4 text-white" x-cloak>My playlist</h1>
-        <template x-for="myplaylist in items">
-            <a onclick="GetCurrentPlaylistID()" :href="`/playlistTracks.html#playlist_id/${myplaylist.id}`"
-                class="d-flex flex-column mb-3 ms-2">
-                <div class="d-flex">
-                    <img :src="myplaylist.images[0].url" width="80" height="80">
-                    <div class="ms-2">
-                        <span class="fs-6 text-white" x-text="myplaylist.name">The best</span><br>
-                        <p class="fs-6 text-white" x-text="myplaylist.description">it's my playlist i just created </p>
-                    </div>
-                </div>
-            </a>
-        </template>
-        <div x-data x-cloak x-show="window.localStorage.getItem('logged_in') !== 'yes'" class="playlist-error-msg ">
-            <i class="text-center fas fa-circle-exclamation  fs-1" style="color:#ff2e2e;"></i>
-            <p class="text-white text-center">inother to view your view and also create your playlist you have to sign
-                in Note: over for user's with a spotify account </p>
-            <button class="gradient-btn" onclick="signInWithSpotify()">Sign in</button>
+        <div x-data="USERPROFILE" class="d-flex align-items-center p-2" style="background: rgb(8, 8, 8);">
+            <img src="assests/img/genre-pop.jpg" width="40" height="40" style="border-radius: 50%;">
+            <h4 class="text-white ps-2">My playlist</h4>
+           <div  onclick="toggleSidebar()" class="ms-auto"> <i class="fas fa-bars text-white"></i></div>
         </div>
+        <div class="mt-2">
+            <template x-for="myplaylist in items">
+                <a onclick="GetCurrentPlaylistID()" :href="`/playlistTracks.html#playlist_id/${myplaylist.id}`"
+                    class="d-flex flex-column mb-3 ms-2">
+                    <div class="d-flex">
+                        <img :src="myplaylist.images[0].url" class="rounded" width="80" height="80">
+                        <div class="ms-2">
+                            <span class="fs-6 text-white" x-text="myplaylist.name">The best</span><br>
+                            <p class="fs-6 text-white" x-text="myplaylist.description">it's my playlist i just created
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </template>
+            <div x-data x-cloak x-show="window.localStorage.getItem('logged_in') !== 'yes'" class="playlist-error-msg ">
+                <i class="text-center fas fa-circle-exclamation  fs-1" style="color:#ff2e2e;"></i>
+                <p class="text-white text-center">inother to view your view and also create your playlist you have to
+                    sign
+                    in Note: over for user's with a spotify account </p>
+                <button class="gradient-btn" onclick="signInWithSpotify()">Sign in</button>
+            </div>
+
+        </div>
+
     </div>
+
 
 
 
@@ -286,7 +303,7 @@
                 <div class=" htunes-cards-text mt-auto pt-3 w-100">
                     <h3 class="text-white" x-text="playlist.name"></h3>
 
-                    <p class="text-white" x-text="playlist.description" style="word-break: break-all;"></p>
+                    <p class="description" x-html="playlist.description" style="word-break: break-all;"></p>
                     <a class="d-block w-100" :href="`/playlistTracks.html#playlist_id/${playlist.id}`"><button
                             class="Htunes-btn w-100"><span>Get</span></button></a>
                 </div>
@@ -342,11 +359,6 @@
             </div>
         </div>
     </div>
-
-    <button x-data x-show="window.localStorage.getItem('logged_in')=== 'yes'" class="gradient-btn createPlaylist"
-        type="button" data-mdb-toggle="modal" data-mdb-target="#bottomLeftModal">
-        <i class="fs-6 fas fa-circle-plus"></i>
-    </button>
 
 
     <div class="loader" id="loader">
@@ -469,12 +481,12 @@
                 console.log(data)
             }
             iziToast.success({
-              title: "Successful",
-              message: "Playlist has been added.",
+                title: "Successful",
+                message: "Playlist has been added.",
             });
         }
 
-        catch(err){
+        catch (err) {
             alert('error')
             iziToast.error({
                 title: "Error",

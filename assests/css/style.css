@@ -130,8 +130,8 @@ h6 {
      margin-left: auto;
   } */
 .search-imgs {
-  width: 80px !important;
-  height: 80px !important;
+  width: 60px !important;
+  height: 60px !important;
 }
 .search-content-container {
   display: flex;
@@ -139,6 +139,15 @@ h6 {
 }
 .search-content-text {
   padding-left: 8px;
+}
+.Recently-playedDropdown {
+  position: static;
+  cursor: pointer;
+  width: 350px;
+  background-color: transparent;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin: 6px;
 }
 @media screen and (max-width: 522px) {
   .navbar-toggler {
@@ -419,11 +428,17 @@ h6 {
   }
 }
 
+
+
 .playlist-cover-bg {
   height: 430px;
 }
-.addsong-btn-container {
-  /* position: absolute; */
+
+.description{
+  color: white;
+}
+.description a{
+  color: rgb(255, 0, 255);
 }
 
 @media screen and (max-width: 1024px) {

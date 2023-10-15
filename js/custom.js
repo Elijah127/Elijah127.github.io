@@ -46,7 +46,7 @@ const oauthState = generateRandomState();
 
 const signInWithSpotify = () => {
   window.location.href =
-    "https://accounts.spotify.com/authorize?response_type=code&client_id=ca50887d25574b2fa3dfc59d08602698&scope=playlist-modify-public playlist-modify-private playlist-read-private&redirect_uri=https://elijah127.github.io/authorize.html&state=" +
+    "https://accounts.spotify.com/authorize?response_type=code&client_id=ca50887d25574b2fa3dfc59d08602698&scope=playlist-modify-public playlist-modify-private playlist-read-private user-read-recently-played&redirect_uri=https://elijah127.github.io/authorize.html&state=" +
     generateRandomState();
 };
 
@@ -105,7 +105,6 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
     embedController = EmbedController;
   };
   IFrameAPI.createController(element, options, callback);
- 
 };
 
 var playlist_id;
@@ -628,19 +627,22 @@ document.addEventListener("alpine:init", () => {
   }));
 });
 
+
 // playlists tracks
 document.addEventListener("alpine:init", () => {
   Alpine.data("PlaylistsTracks", () => ({
     track: {},
     playlist: {},
     cover_image: "",
-    checkUserOwnedPlaylist(){
-      return this.playlist.owner.id === localStorage.getItem("user_id");
+    checkUserOwnedPlaylist() {
+      return this.playlist.owner?.id === localStorage.getItem("user_id");
     },
-   
+
     init() {
       console.log("Playlist tracks");
       var current = this;
+     
+     
       getSpotifyData(
         `https://api.spotify.com/v1/playlists/${playlist_id}`,
         function (data) {
@@ -648,18 +650,21 @@ document.addEventListener("alpine:init", () => {
           current.playlist = data;
           console.log(current.playlist);
           console.log(current.track);
-
+          
           //track duration
           for (let i = 0; i < current.track.length; i++) {
             let albumtrack = current.track[i];
             albumtrack = albumtrack.track;
-            let trackTime = albumtrack.duration_ms;
+            let trackTime = albumtrack?.duration_ms;
             const { minutes, seconds } =
               convertMillisecondsToMinutesAndSeconds(trackTime);
 
             // console.log(trackSec);
-            albumtrack.trackMins = minutes;
-            albumtrack.trackSec = seconds;
+            if(albumtrack){
+              albumtrack.trackMins = minutes;
+              albumtrack.trackSec = seconds;
+            }
+            
           }
 
           let loader = document.getElementById("loader");
@@ -676,17 +681,17 @@ document.addEventListener("alpine:init", () => {
         }
       );
     },
+
     playMusic(uri) {
-      
       if (uri != this.current_uri) {
         embedController.loadUri(uri);
-        
+        console.log(uri)
       }
       let openModel = document.getElementById("open-modal");
       openModel.style.display = "block";
       this.current_uri = uri;
       console.log(openModel, "displayed");
-      
+
     },
   }));
 });
@@ -708,19 +713,27 @@ document.addEventListener("alpine:init", () => {
   }));
 });
 
+
+
 function searchplaytrackDP() {
   var custom_search_form = document.getElementById("custom-search-form");
-var custom_search_dropdown = document.getElementById("custom-search-dropdown");
-custom_search_form.onkeyup= function() {
-  custom_search_dropdown.style.height = "500px";
-  if(custom_search_form.value < 1){
-    custom_search_dropdown.style.height = "0px"
-  }
+  var custom_search_dropdown = document.getElementById(
+    "custom-search-dropdown"
+  );
+  custom_search_form.onkeyup = function () {
+    custom_search_dropdown.style.height = "500px";
+    console.log(custom_search_form.value.length )
+    if (custom_search_form.value < 1 ) {
+      custom_search_dropdown.style.height = "0px";
+    }
+    
+    else if (custom_search_form.value.length == 0) {
+      alert("yoo")
+      // custom_search_dropdown.style.height = "0px";
+    }
+
+  };
 }
-}
-
-
-
 
 // remove songs from playlist
 function RemoveSongFromPlaylist(playlisttrackURI) {
@@ -747,27 +760,27 @@ function RemoveSongFromPlaylist(playlisttrackURI) {
     .then((response) => response.json())
     .then((Removesong) => {
       console.log(Removesong);
-         if (Removesong.error) {
-            iziToast.error({
-              title: "Error",
-              message: "Cannot add to playlist.",
-            });
-          } else {
-            iziToast.success({
-              title: "Successful",
-              message: "Playlist has been removed.",
-            });
-          }
-        })
-        .catch((error) => {
-          iziToast.error({
-            title: "Error",
-            message: "An error occured. Check internet and try again",
-          });
+      if (Removesong.error) {
+        iziToast.error({
+          title: "Error",
+          message: "Cannot add to playlist.",
+        });
+      } else {
+        iziToast.success({
+          title: "Successful",
+          message: "Playlist has been removed.",
+        });
+      }
+    })
+    .catch((error) => {
+      iziToast.error({
+        title: "Error",
+        message: "An error occured. Check internet and try again",
+      });
     });
-    setTimeout(function() {
-      window.location.reload();
-    }, 3000); // 3000 milliseconds = 3 seconds
+  setTimeout(function () {
+    window.location.reload();
+  }, 3000); // 3000 milliseconds = 3 seconds
 }
 
 //my playlists
@@ -786,7 +799,7 @@ document.addEventListener("alpine:init", () => {
     },
     addToPlaylist(PlayListID, TrackURI) {
       console.log(TrackURI);
-      
+
       // add song to playlist
       function AddPlaylistSong() {
         const addedSongs = {
@@ -824,7 +837,6 @@ document.addEventListener("alpine:init", () => {
       }
       AddPlaylistSong();
     },
-    
   }));
 });
 
@@ -850,9 +862,7 @@ document.addEventListener("alpine:init", () => {
         uris: [`${TrackURI}`],
         position: 0,
       };
-      setTimeout(function() {
-        window.location.reload();
-      }, 2000); // 2000 milliseconds = 2 seconds
+     
       fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
         method: "post",
         headers: {
@@ -873,6 +883,9 @@ document.addEventListener("alpine:init", () => {
               title: "Successful",
               message: "Playlist has been added.",
             });
+            setTimeout(function () {
+              window.location.reload();
+            }, 2000); // 2000 milliseconds = 2 seconds
           }
         })
         .catch((error) => {
@@ -881,7 +894,43 @@ document.addEventListener("alpine:init", () => {
             message: "An error occured. Check internet and try again",
           });
         });
-
     },
   }));
 });
+// recently played music 
+document.addEventListener("alpine:init", () => {
+  Alpine.data("RecentlyPlayed", () => ({
+    RecentSongs:{},
+    init() {
+      var current = this;
+      getUserSpotifyData(
+        "https://api.spotify.com/v1/me/player/recently-played",
+        function (data) {
+          current.RecentSongs = data.items;
+          console.log(current.RecentSongs,"worked out")
+         
+        }
+      );
+    },
+  }));
+});
+
+
+
+// user profile
+document.addEventListener("alpine:init", () => {
+  Alpine.data("USERPROFILE", () => ({
+    Userprofile:{},
+    init() {
+      var current = this;
+      getUserSpotifyData(
+        "https://api.spotify.com/v1/me",
+        function (data) {
+          current.Userprofile = data;
+          console.log(data.items.name,"profile")
+        }
+      );
+    },
+  }));
+});
+

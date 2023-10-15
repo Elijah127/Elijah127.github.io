@@ -267,7 +267,7 @@
           <img :src="playlist.images[0].url" class="rounded" alt="" width="245px">
           <div class="home-page-cards-text mt-3 w-100">
             <h3 class="text-white" x-text="playlist.name"></h3>
-            <p class="text-white" x-text="playlist.description" style="word-break: break-all;"></p>
+            <p class="text-white description" x-html="playlist.description" style="word-break: break-all;"></p>
             <div>
               <a :href="`/playlistTracks.html#playlist_id/${playlist.id}`" class="d-block w-100"><button
                   class="Htunes-btn w-100"><span>Get</span></button></a>
