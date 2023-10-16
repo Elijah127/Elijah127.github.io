@@ -16,14 +16,13 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
         <!-- MDB -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
+        <link href="assests/css/mdb.min.css" rel="stylesheet" />
         <!--animate on scroll-->
-        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+        <link rel="stylesheet" href="assests/css/aos.css" />
+        <!--alpine js-->
+        <script defer src="js/alpine.min.js"></script>
 
         <link rel="stylesheet" href="assests/css/iziToast.min.css">
-        <!--alpine js-->
-        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
         <link href="./assests/css/style.css" rel="stylesheet">
     </head>
     <style>
@@ -288,7 +287,8 @@
 
                             <div x-cloak class="play-album-btn ms-2" id="open-modal">
                                 <button id="album-play-btn" data-mdb-toggle="modal" data-mdb-target="#exampleModal"
-                                    class="gradient-btn" @click="playMusic(artistAlbum.uri,console.log(artistAlbum.uri))">
+                                    class="gradient-btn"
+                                    @click="playMusic(artistAlbum.uri,console.log(artistAlbum.uri))">
                                     <i class="fas fa-play text-white"></i>
                                 </button>
 
@@ -317,7 +317,8 @@
             <div class="mt-5">
                 <ol class="text-white">
                     <template x-for="track in artistAlbumtrack">
-                        <li class="m-3 Al-track " @click="playMusic(track.uri , console.log(track.uri)); Trackuri = track.uri;"
+                        <li class="m-3 Al-track "
+                            @click="playMusic(track.uri , console.log(track.uri)); Trackuri = track.uri;"
                             data-mdb-toggle="modal" data-mdb-target="#exampleModal">
                             <div class="d-flex">
                                 <h5 class="m-0 text-white" x-text="track.name"></h5>
@@ -380,7 +381,8 @@
                                             <a @click="addToPlaylist(myplaylist.id,Trackuri)"
                                                 class="d-flex flex-column mt-2 text-white">
                                                 <div class="d-flex">
-                                                    <img :src="myplaylist.images[0].url" width="60" height="60" class="rounded">
+                                                    <img :src="myplaylist.images[0].url" width="60" height="60"
+                                                        class="rounded">
                                                     <div class="ms-2">
                                                         <span class="fs-6" x-text="myplaylist.name"></span><br>
                                                         <p class="fs-6" x-text="myplaylist.description"></p>
@@ -393,7 +395,8 @@
 
                             </ul>
                         </div>
-                    <i class="fas fa-xmark text-white fs-4 close-btn d-flex justify-content-end" data-mdb-dismiss="modal"></i>
+                        <i class="fas fa-xmark text-white fs-4 close-btn d-flex justify-content-end"
+                            data-mdb-dismiss="modal"></i>
 
                     </div>
 
@@ -412,9 +415,9 @@
 
 
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+    <script type="text/javascript" src="js/mdb.min.js"></script>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="js/aos.js"></script>
 
     <script src="./js/routie.min.js"></script>
 
