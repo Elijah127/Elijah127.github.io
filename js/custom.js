@@ -135,6 +135,13 @@ function convertMillisecondsToMinutesAndSeconds(milliseconds) {
     seconds,
   };
 }
+// Disable scrolling for a specific element with ID 'myElement'
+
+let loader = document.getElementById("loader");
+loader.addEventListener("wheel", function (e) {
+  e.preventDefault();
+});
+
 
 document.addEventListener("alpine:init", () => {
   if (window.localStorage.getItem("logged_in") === "yes") {
