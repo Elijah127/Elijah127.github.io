@@ -151,9 +151,9 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light p-3 shadow-5">
-        <a class="nav-logo mt-2 mt-lg-0 fs-3 justify-content-center text-white p-2 d-flex" href="index.html">
-            <img class="p-1" src="./assests/img/h tunes logo.png" height="40" alt="h tunes Logo" loading="lazy" />
+    <nav class="navbar navbar-expand-lg navbar-light  shadow-5">
+        <a class="nav-logo  mt-lg-0 fs-4 justify-content-center text-white p-2 d-flex" href="index.html">
+            <img class="p-1" src="./assests/img/h tunes logo.png" height="30" alt="h tunes Logo" loading="lazy" />
             H^tunes
         </a>
         <!-- Container wrapper -->
@@ -263,7 +263,7 @@
                 <a onclick="GetCurrentPlaylistID()" :href="`/playlistTracks.html#playlist_id/${myplaylist.id}`"
                     class="d-flex flex-column mb-3 ms-2">
                     <div class="d-flex">
-                        <img :src="myplaylist.images[0].url" class="rounded" width="80" height="80">
+                        <img :src="myplaylist.images[0].url" class="rounded" width="60" height="60">
                         <div class="ms-2">
                             <span class="fs-6 text-white" x-text="myplaylist.name">The best</span><br>
                             <p class="fs-6 text-white" x-text="myplaylist.description">it's my playlist i just created

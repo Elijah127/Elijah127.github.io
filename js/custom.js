@@ -46,7 +46,7 @@ const oauthState = generateRandomState();
 
 const signInWithSpotify = () => {
   window.location.href =
-    "https://accounts.spotify.com/authorize?response_type=code&client_id=ca50887d25574b2fa3dfc59d08602698&scope=playlist-modify-public playlist-modify-private playlist-read-private user-read-recently-played&redirect_uri=https://elijah127.github.io/authorize.html&state=" +
+    "https://accounts.spotify.com/authorize?response_type=code&client_id=ca50887d25574b2fa3dfc59d08602698&scope=playlist-modify-public playlist-modify-private playlist-read-private user-read-recently-played&redirect_uri=https://http://127.0.0.1:5500/authorize.html&state=" +
     generateRandomState();
 };
 
@@ -137,10 +137,10 @@ function convertMillisecondsToMinutesAndSeconds(milliseconds) {
 }
 // Disable scrolling for a specific element with ID 'myElement'
 
-let loader = document.getElementById("loader");
-loader.addEventListener("wheel", function (e) {
-  e.preventDefault();
-});
+// let loader = document.getElementById("loader");
+// loader.addEventListener("wheel", function (e) {
+//   e.preventDefault();
+// });
 
 
 document.addEventListener("alpine:init", () => {
@@ -171,6 +171,9 @@ document.addEventListener("alpine:init", () => {
           console.log(current.tracks);
 
           let loader = document.getElementById("loader");
+          loader.onwheel = function(stopscroll){
+            stopscroll.preventDefault()
+          }
           loader.style.display = "none";
         }
       );
