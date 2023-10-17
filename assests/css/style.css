@@ -54,8 +54,11 @@ h6 {
     padding-bottom: 0px;
   }
   .nav-logo{
-    top: 0px;
+    top: 6px;
     align-items: center;
+  }
+  .nav-padding{
+    padding: 6px;
   }
 }
 
