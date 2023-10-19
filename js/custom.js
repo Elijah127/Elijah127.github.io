@@ -834,7 +834,7 @@ document.addEventListener("alpine:init", () => {
             } else {
               iziToast.success({
                 title: "Successful",
-                message: "Playlist has been added.",
+                message: "song has been added to playlist.",
               });
             }
           })

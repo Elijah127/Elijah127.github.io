@@ -387,7 +387,7 @@
 
     <script src="./js/sidebarjs.min.js"></script>
 
-    <script src="js/iziToast.min.js"></script>
+    <!-- <script src="js/iziToast.min.js"></script> -->
 
 
     <script src="./js/custom.js"></script>
@@ -480,18 +480,18 @@
                 const data = await response.json()
                 console.log(data)
             }
-            iziToast.success({
-                title: "Successful",
-                message: "Playlist has been added.",
-            });
+            // iziToast.success({
+            //     title: "Successful",
+            //     message: "Playlist has been created.",
+            // });
         }
 
         catch (err) {
-            alert('error')
-            iziToast.error({
-                title: "Error",
-                message: "An error occured. Check internet and try again",
-            });
+            alert("check internet connection")
+            // iziToast.error({
+            //     title: "Error",
+            //     message: "An error occured. Check internet and try again",
+            // });
         }
 
     </script>
