@@ -193,7 +193,7 @@
 
         const maindata = {
             code: code,
-            redirect_uri: "elijah127.github.io/authorize.html",
+            redirect_uri: "http://127.0.0.1:5500/authorize.html",
             grant_type: 'authorization_code'
         }
 
@@ -214,7 +214,7 @@
             window.localStorage.setItem("refresh_token", data.refresh_token);
             window.localStorage.setItem("logged_in", 'yes');
 
-            window.location.href = "elijah127.github.io/";
+            window.location.href = "http://127.0.0.1:5500/";
         }
 
         getToken();

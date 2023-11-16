@@ -41,6 +41,19 @@ h6 {
 .nav-logo > img {
   transform: rotate(20deg);
 }
+@media screen and (max-width:992px){
+  .profile-img{
+  display: none !important;
+}
+}
+.top-nav-profile-img{
+  display: none !important;
+}
+@media screen and (max-width:992px){
+  .top-nav-profile-img{
+    display: block !important;
+  }
+}
 
 .menu-bar-container {
   display: inline-block;
@@ -165,7 +178,7 @@ h6 {
   margin-right: auto !important;
   margin: 6px;
 }
-@media screen and (max-width: 522px) {
+@media screen and (max-width: 992px) {
   .navbar-toggler {
     margin-left: auto;
   }

@@ -13,17 +13,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
-   <!-- MDB -->
-   <link href="assests/css/mdb.min.css" rel="stylesheet" />
-   <!--animate on scroll-->
-   <link rel="stylesheet" href="assests/css/aos.css" />
-   <!--alpine js-->
-   <script defer src="js/alpine.min.js"></script>
+  <!-- MDB -->
+  <link href="assests/css/mdb.min.css" rel="stylesheet" />
+  <!--animate on scroll-->
+  <link rel="stylesheet" href="assests/css/aos.css" />
+  <!--alpine js-->
+  <script defer src="js/alpine.min.js"></script>
 
   <link href="./assests/css/style.css" rel="stylesheet">
 </head>
 
-<body>
+<body x-data>
 
   <div id="root" style="overflow: hidden;">
     <!-- Navbar -->
@@ -44,7 +44,12 @@
             <div class="bar3"></div>
           </div>
         </button>
-
+        
+        <div x-data="USERPROFILE" >
+            <div x-cloak x-data x-show="window.localStorage.getItem('logged_in') === 'yes'" >
+            <img class="top-nav-profile-img me-2" :src="Userprofiledetails?.images[0].url" width="40" height="40" style="border-radius:50%;">
+          </div>
+          </div>
         <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Navbar brand -->
@@ -67,15 +72,22 @@
               <a class="nav-link" href="about.html">About us</a>
             </li>
 
-
           </ul>
           <!-- Left links -->
-
-
-
-          <li class="nav-item Sign-in me-2">
+          <div x-data="USERPROFILE" x-show="window.localStorage.getItem('logged_in') === 'yes'">
+            <div x-cloak x-data  >
+            <img class="profile-img me-2":src="Userprofiledetails?.images[0].url" width="40" height="40" style="border-radius:50%;">
+          </div>
+          </div>
+          
+          <li x-cloak x-show="window.localStorage.getItem('logged_in') !== 'yes'" class="nav-item Sign-in me-2">
             <button class="nav-link gradient-btn" onclick="signInWithSpotify()">Sign in</button>
+            </lix>
+            <!-- sign out -->
+          <li x-cloak x-show="window.localStorage.getItem('logged_in') === 'yes'" class="nav-item Sign-in me-2">
+            <button class="nav-link gradient-btn" onclick="signoutofspotify()">Sign out</button>
           </li>
+          <!-- sign out -->
           <div class=" d-flex flex-column" x-data="searchOptions">
             <div x-data="{open : false}">
               <form class="d-flex input-group w-auto form-search">
@@ -125,6 +137,7 @@
         </div>
 
       </div>
+    
 
 
       <!-- Collapsible wrapper -->

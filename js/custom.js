@@ -46,7 +46,7 @@ const oauthState = generateRandomState();
 
 const signInWithSpotify = () => {
   window.location.href =
-    "https://accounts.spotify.com/authorize?response_type=code&client_id=ca50887d25574b2fa3dfc59d08602698&scope=playlist-modify-public playlist-modify-private playlist-read-private user-read-recently-played&redirect_uri=https://elijah127.github.io/authorize.html&state=" +
+    "https://accounts.spotify.com/authorize?response_type=code&client_id=ca50887d25574b2fa3dfc59d08602698&scope=playlist-modify-public playlist-modify-private playlist-read-private user-read-recently-played&redirect_uri=http://127.0.0.1:5500/authorize.html&state=" +
     generateRandomState();
 };
 
@@ -925,18 +925,23 @@ document.addEventListener("alpine:init", () => {
   }));
 });
 
-
+//sign out 
+function signoutofspotify(){
+  alert("cleared")
+  localStorage.clear()
+  location.reload()
+}
 
 // user profile
 document.addEventListener("alpine:init", () => {
   Alpine.data("USERPROFILE", () => ({
-    Userprofile:{},
+    Userprofiledetails:{},
     init() {
       var current = this;
       getUserSpotifyData(
         "https://api.spotify.com/v1/me",
         function (data) {
-          current.Userprofile = data;
+          current.Userprofiledetails = data;
           console.log(data,"profile")
         }
       );

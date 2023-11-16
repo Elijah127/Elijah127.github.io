@@ -69,6 +69,12 @@
 
         </ul>
         <!-- Left links -->
+        <div x-data="USERPROFILE" x-show="window.localStorage.getItem('logged_in') === 'yes'">
+          <div x-cloak x-data  >
+          <img class="profile-img me-2":src="Userprofiledetails?.images[0].url" width="40" height="40" style="border-radius:50%;">
+        </div>
+        </div>
+
         <div class=" d-flex flex-column" x-data="searchAlbum">
           <div x-data="{open : false}">
             <form class="d-flex input-group w-auto form-search">
