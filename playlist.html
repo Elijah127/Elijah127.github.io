@@ -23,6 +23,8 @@
         <script defer src="js/alpine.min.js"></script>
 
         <link href="./assests/css/sidebarjs.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="assests/css/iziToast.min.css">
+
         <link href="./assests/css/style.css" rel="stylesheet">
     </head>
 </head>
@@ -395,7 +397,7 @@
 
     <script src="./js/sidebarjs.min.js"></script>
 
-    <!-- <script src="js/iziToast.min.js"></script> -->
+    <script src="js/iziToast.min.js"></script>
 
 
     <script src="./js/custom.js"></script>
@@ -464,9 +466,9 @@
                     error_message.style.margin = "0px"
                 }
                 else {
-                    // setTimeout(function () {
-                    //     window.location.reload();
-                    // }, 2000); 
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000); 
                 }
             })
         }
