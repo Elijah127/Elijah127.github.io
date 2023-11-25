@@ -145,7 +145,6 @@
 
 
     }
-    
 </style>
 
 <body>
@@ -175,7 +174,7 @@
 
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0">
-                   
+
                     <li class="nav-item">
                         <a class="nav-link" href="albums.html">Albums</a>
                     </li>
@@ -189,26 +188,28 @@
                         <a class="nav-link" href="about.html">About us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"  onclick="toggleSidebar()">My Playlist</a>
+                        <a class="nav-link" onclick="toggleSidebar()">My Playlist</a>
                     </li>
-                    <li class="nav-item"> 
-                        <button style="padding: 6px 16px 6px 16px; margin-left: 10px;" x-data x-cloak x-show="window.localStorage.getItem('logged_in')=== 'yes'" class="gradient-btn "
-                        type="button" data-mdb-toggle="modal" data-mdb-target="#bottomLeftModal">
-                        create playlist
-                        <i class="fs-6 fas fa-circle-plus"></i>
-                    </button>
+                    <li class="nav-item">
+                        <button style="padding: 6px 16px 6px 16px; margin-left: 10px;" x-data x-cloak
+                            x-show="window.localStorage.getItem('logged_in')=== 'yes'" class="gradient-btn "
+                            type="button" data-mdb-toggle="modal" data-mdb-target="#bottomLeftModal">
+                            create playlist
+                            <i class="fs-6 fas fa-circle-plus"></i>
+                        </button>
                     </li>
 
 
                 </ul>
                 <!-- Left links -->
                 <div x-data="USERPROFILE" x-show="window.localStorage.getItem('logged_in') === 'yes'">
-                    <div x-cloak x-data  >
-                    <img class="profile-img me-2":src="Userprofiledetails?.images[0].url" width="40" height="40" style="border-radius:50%;">
-                  </div>
-                  </div>
-               
-                
+                    <div x-cloak x-data>
+                        <img class="profile-img me-2" :src="Userprofiledetails?.images[0].url" width="40" height="40"
+                            style="border-radius:50%;">
+                    </div>
+                </div>
+
+
                 <div class=" d-flex flex-column" x-data="searchPlaylist" style="z-index: 2;">
                     <div x-data="{open : false}">
                         <form class="d-flex input-group w-auto form-search">
@@ -258,12 +259,12 @@
 
     <!-- side bar -->
 
-   
+
     <div x-data="MyPlaylists" sidebarjs>
         <div x-data="USERPROFILE" class="d-flex align-items-center p-2" style="background: rgb(8, 8, 8);">
-            <img :src="Userprofiledetails.images[0].url" width="40" height="40"  style="border-radius:50%;">
+            <img :src="Userprofiledetails.images[0].url" width="40" height="40" style="border-radius:50%;">
             <h4 class="text-white ps-2">Myplaylists</h4>
-           <div  onclick="toggleSidebar()" class="ms-auto"> <i class="fas fa-bars text-white"></i></div>
+            <div onclick="toggleSidebar()" class="ms-auto"> <i class="fas fa-bars text-white"></i></div>
         </div>
         <div class="mt-2">
             <template x-for="myplaylist in items">
@@ -452,25 +453,26 @@
 
         var error_message = document.getElementById('error-message');
 
-        try {
-            function CreatePlaylistBtn() {
-                getUserSpotifyData("https://api.spotify.com/v1/me", function (data) {
-                    console.log(data);
-                    createplaylist(data.id);
+        function CreatePlaylistBtn() {
+            getUserSpotifyData("https://api.spotify.com/v1/me", function (data) {
+                console.log(data);
+                createplaylist(data.id);
 
 
-                    if (playlist_name.value.trim() === "") {
-                        error_message.style.display = "block"
-                        error_message.style.margin = "0px"
-                    }
-                    else {
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 2000); // 2000 milliseconds = 2 seconds
-                    }
-                })
-            }
-            async function createplaylist(id) {
+                if (playlist_name.value.trim() === "") {
+                    error_message.style.display = "block"
+                    error_message.style.margin = "0px"
+                }
+                else {
+                    // setTimeout(function () {
+                    //     window.location.reload();
+                    // }, 2000); 
+                }
+            })
+        }
+        async function createplaylist(id) {
+            try {
+
                 const playlist = {
                     "name": `${playlist_name.value}`,
                     "description": `${playlist_description.value}`,
@@ -486,19 +488,19 @@
                 });
                 const data = await response.json()
                 console.log(data)
+                iziToast.success({
+                    title: "Successful",
+                    message: "Playlist has been created.",
+                });
             }
-            // iziToast.success({
-            //     title: "Successful",
-            //     message: "Playlist has been created.",
-            // });
-        }
 
-        catch (err) {
-            alert("check internet connection")
-            // iziToast.error({
-            //     title: "Error",
-            //     message: "An error occured. Check internet and try again",
-            // });
+            catch (err) {
+                iziToast.error({
+                    title: "Error",
+                    message: "An error occured.",
+                });
+            }
+
         }
 
     </script>
