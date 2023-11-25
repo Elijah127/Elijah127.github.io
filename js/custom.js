@@ -171,7 +171,7 @@ document.addEventListener("alpine:init", () => {
           console.log(current.tracks);
 
           let loader = document.getElementById("loader");
-          loader.onwheel = function(stopscroll){
+          loader.onwheel = function (stopscroll) {
             stopscroll.preventDefault()
           }
           loader.style.display = "none";
@@ -651,8 +651,8 @@ document.addEventListener("alpine:init", () => {
     init() {
       console.log("Playlist tracks");
       var current = this;
-     
-     
+
+
       getSpotifyData(
         `https://api.spotify.com/v1/playlists/${playlist_id}`,
         function (data) {
@@ -660,7 +660,7 @@ document.addEventListener("alpine:init", () => {
           current.playlist = data;
           console.log(current.playlist);
           console.log(current.track);
-          
+
           //track duration
           for (let i = 0; i < current.track.length; i++) {
             let albumtrack = current.track[i];
@@ -670,11 +670,11 @@ document.addEventListener("alpine:init", () => {
               convertMillisecondsToMinutesAndSeconds(trackTime);
 
             // console.log(trackSec);
-            if(albumtrack){
+            if (albumtrack) {
               albumtrack.trackMins = minutes;
               albumtrack.trackSec = seconds;
             }
-            
+
           }
 
           let loader = document.getElementById("loader");
@@ -732,11 +732,11 @@ function searchplaytrackDP() {
   );
   custom_search_form.onkeyup = function () {
     custom_search_dropdown.style.height = "500px";
-    console.log(custom_search_form.value.length )
-    if (custom_search_form.value < 1 ) {
+    console.log(custom_search_form.value.length)
+    if (custom_search_form.value < 1) {
       custom_search_dropdown.style.height = "0px";
     }
-    
+
     else if (custom_search_form.value.length == 0) {
       alert("yoo")
       // custom_search_dropdown.style.height = "0px";
@@ -872,7 +872,7 @@ document.addEventListener("alpine:init", () => {
         uris: [`${TrackURI}`],
         position: 0,
       };
-     
+
       fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
         method: "post",
         headers: {
@@ -910,15 +910,15 @@ document.addEventListener("alpine:init", () => {
 // recently played music 
 document.addEventListener("alpine:init", () => {
   Alpine.data("RecentlyPlayed", () => ({
-    RecentSongs:{},
+    RecentSongs: {},
     init() {
       var current = this;
       getUserSpotifyData(
         "https://api.spotify.com/v1/me/player/recently-played",
         function (data) {
           current.RecentSongs = data.items;
-          console.log(current.RecentSongs,"worked out")
-         
+          console.log(current.RecentSongs, "worked out")
+
         }
       );
     },
@@ -926,7 +926,7 @@ document.addEventListener("alpine:init", () => {
 });
 
 //sign out 
-function signoutofspotify(){
+function signoutofspotify() {
   alert("cleared")
   localStorage.clear()
   location.reload()
@@ -935,16 +935,19 @@ function signoutofspotify(){
 // user profile
 document.addEventListener("alpine:init", () => {
   Alpine.data("USERPROFILE", () => ({
-    Userprofiledetails:{},
+    Userprofiledetails: {},
     init() {
       var current = this;
-      getUserSpotifyData(
-        "https://api.spotify.com/v1/me",
-        function (data) {
-          current.Userprofiledetails = data;
-          console.log(data,"profile")
-        }
-      );
+      if (window.localStorage.getItem("logged_in") === "yes") {
+
+        getUserSpotifyData(
+          "https://api.spotify.com/v1/me",
+          function (data) {
+            current.Userprofiledetails = data;
+            console.log(data, "profile")
+          }
+        );
+      }
     },
   }));
 });
