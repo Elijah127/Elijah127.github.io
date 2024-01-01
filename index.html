@@ -44,12 +44,63 @@
             <div class="bar3"></div>
           </div>
         </button>
-        
-        <div x-data="USERPROFILE" >
-            <div x-cloak x-data x-show="window.localStorage.getItem('logged_in') === 'yes'" >
-            <img class="top-nav-profile-img me-2" :src="Userprofiledetails?.images[0].url" width="40" height="40" style="border-radius:50%;">
+
+        <div x-data="{open : false}">
+          <div @click="open = ! open" x-data="USERPROFILE" x-show="window.localStorage.getItem('logged_in') === 'yes'">
+            <div x-cloak x-data>
+              <div class="d-flex align-items-center">
+                <img class="top-nav-profile-img me-2" :src="Userprofiledetails?.images[0].url" width="40" height="40"
+                  style="border-radius:50%;">
+                <i class="fas fa-caret-down me-3 text-white"></i>
+              </div>
+
+              <div class="profile-info-dropdown w-100" x-transition x-show="open" @click.outside="open = false"
+                style="right:0%;">
+                <div class="align-item-center">
+                  <div class="d-flex align-items-baseline">
+                    <i class="far fa-circle-user text-white pe-1"></i>
+                    <span class="text-white" style="word-break: keep-all;">User Name :</span>
+                    <p class="text-white ms-1" style="word-break: keep-all;" x-text="Userprofiledetails.display_name">
+                    </p>
+                  </div>
+                  <div>
+                    <div class="d-flex align-items-baseline">
+                      <i class="fas text-white fa-envelope"></i>
+                      <p class="ms-1 text-white"> Email :<span x-text="Userprofiledetails.email"
+                          style="word-break: keep-all;">
+                    </div>
+                  </div>
+                </div>
+                
+                <div x-data="userFollowing">
+                  <div data-mdb-toggle="modal" data-mdb-target="#bottomLeftModal">
+                    <div class="d-flex align-items-baseline">
+                      <i class="fas fa-plus text-white"></i>
+                      <span class="d-flex align-items-baseline text-white ms-1" style="word-break: keep-all;">Following
+                        : <p style="word-break: keep-all;" x-text=" artistFollowing.artists.total"> </p> </span>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="d-flex align-items-baseline">
+                  <i class="fas fa-circle-plus text-white"></i>
+                  <span class="text-white ms-1" style="word-break: keep-all;">Followers :</span>
+                  <p class="text-white ms-1" style="word-break: keep-all;" x-text="Userprofiledetails.followers.total">
+                  </p>
+                </div>
+
+                <div class="d-flex align-items-baseline ">
+                  <i class="text-white fab fa-product-hunt"></i>
+                  <span class="text-white ms-1" style="word-break: keep-all;">Product :</span>
+                  <p class="text-white ms-1" style="word-break: keep-all;" x-text="Userprofiledetails.product">
+                  </p>
+                </div>
+
+              </div>
+            </div>
           </div>
-          </div>
+        </div>
         <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Navbar brand -->
@@ -74,12 +125,61 @@
 
           </ul>
           <!-- Left links -->
-          <div x-data="USERPROFILE" x-show="window.localStorage.getItem('logged_in') === 'yes'">
-            <div x-cloak x-data  >
-            <img class="profile-img me-2":src="Userprofiledetails?.images[0].url" width="40" height="40" style="border-radius:50%;">
+          <div x-data="{open : false}">
+            <div @click="open = ! open" x-data="USERPROFILE"
+              x-show="window.localStorage.getItem('logged_in') === 'yes'">
+              <div x-cloak x-data>
+                <img class="profile-img me-2" :src="Userprofiledetails?.images[0].url" width="40" height="40"
+                  style="border-radius:50%;">
+                <i class="fas fa-caret-down me-4 text-white profile-img"></i>
+                <div class="profile-info-dropdown" x-transition x-show="open" @click.outside="open = false">
+                  <div class="align-item-center">
+                    <div class="d-flex align-items-baseline">
+                      <i class="far fa-circle-user text-white pe-1"></i>
+                      <span class="text-white" style="word-break: keep-all;">User Name :</span>
+                      <p class="text-white ms-1" style="word-break: keep-all;" x-text="Userprofiledetails.display_name">
+                      </p>
+                    </div>
+                    <div>
+                      <div class="d-flex align-items-baseline">
+                        <i class="fas text-white fa-envelope"></i>
+                        <p class="ms-1 text-white"> Email :<span x-text="Userprofiledetails.email"
+                            style="word-break: keep-all;">
+                          </span></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div x-data="userFollowing">
+                    <div data-mdb-toggle="modal" data-mdb-target="#bottomLeftModal">
+                      <div class="d-flex align-items-baseline">
+                        <i class="fas fa-plus text-white"></i>
+                        <span class="d-flex align-items-baseline text-white ms-1"
+                          style="word-break: keep-all;">Following :<p style="word-break: keep-all;"
+                            x-text=" artistFollowing.artists.total"></p></span>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-baseline ">
+                    <i class="fas fa-circle-plus text-white"></i>
+                    <span class="text-white ms-1" style="word-break: keep-all;">Followers :</span>
+                    <p class="text-white ms-1" style="word-break: keep-all;"
+                      x-text="Userprofiledetails.followers.total"></p>
+                  </div>
+
+                  <div class="d-flex align-items-baseline ">
+                    <i class="text-white fab fa-product-hunt"></i>
+                    <span class="text-white ms-1" style="word-break: keep-all;">Product :</span>
+                    <p class="text-white ms-1" style="word-break: keep-all;" x-text="Userprofiledetails.product">
+                    </p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
           </div>
-          </div>
-          
+
+
           <li x-cloak x-show="window.localStorage.getItem('logged_in') !== 'yes'" class="nav-item Sign-in me-2">
             <button class="nav-link gradient-btn" onclick="signInWithSpotify()">Sign in</button>
             </lix>
@@ -137,7 +237,7 @@
         </div>
 
       </div>
-    
+
 
 
       <!-- Collapsible wrapper -->
@@ -391,6 +491,39 @@
       <!-- Copyright -->
     </footer>
     <!-- Footer -->
+
+    <div x-data="userFollowing" class="modal fade" id="bottomLeftModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog bottomLeftModalDialog" role="document">
+        <div class="modal-content" style="background: rgb(34 34 34) !important;">
+          <div class="d-flex Htunes-modal-header">
+            <div class="d-flex w-100 ms-auto pt-1 pe-2" style="position: absolute; z-index:2;"><i
+                data-mdb-dismiss="modal" class="close-icon ms-auto fs-3 fas fa-xmark text-white"></i>
+            </div>
+          </div>
+          <div class="modal-body" style=" max-width: 500px;">
+            <h3 class="text-white">Artist following</h3>
+
+            <div class="mt-2">
+              <template x-for="artistFollowingdet in artistFollowing.artists.items">
+                <a :href="`artistprofile.html#artistProfile_id/${artistFollowingdet.id}`">
+                  <div class="d-flex">
+                    <img :src="artistFollowingdet.images[1].url" class="search-imgs rounded">
+                    <div class="ms-2">
+                      <span class="text-white" x-text="artistFollowingdet.name"></span>
+                      <p class="text-white">Genre :<span x-text="artistFollowingdet.genres[0]"></span></p>
+                    </div>
+                  </div>
+                </a>
+              </template>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
 
 
     <div class="loader" id="loader">

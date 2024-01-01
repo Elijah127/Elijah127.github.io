@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Htunes</title>
+  <link href="./assests/img/h tunes logo.png" rel="icon">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
+  <!-- MDB -->
+  <link href="assests/css/mdb.min.css" rel="stylesheet" />
+  <!--animate on scroll-->
+  <link rel="stylesheet" href="assests/css/aos.css" />
+  <!--alpine js-->
+  <script defer src="js/alpine.min.js"></script>
+
+  <link href="./assests/css/style.css" rel="stylesheet">
+</head>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light  shadow-5">
+    <a class="nav-logo  mt-lg-0 fs-4 justify-content-center text-white p-2 d-flex" href="index.html">
+      <img class="p-1" src="./assests/img/h tunes logo.png" height="30" alt="h tunes Logo" loading="lazy" />
+      H^tunes
+    </a>
+    <!-- Container wrapper -->
+    <div class="container-fluid justify-content-center nav-padding">
+      <!-- Toggle button -->
+      <button class="navbar-toggler text-white p-2" type="button" data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <div class="menu-bar-container" onclick="myFunction(this)">
+          <div class="bar1"></div>
+          <div class="bar2"></div>
+          <div class="bar3"></div>
+        </div>
+      </button>
+      
+      <div x-data="USERPROFILE" >
+          <div x-cloak x-data x-show="window.localStorage.getItem('logged_in') === 'yes'" >
+          <img class="top-nav-profile-img me-2" :src="Userprofiledetails?.images[0].url" width="40" height="40" style="border-radius:50%;">
+        </div>
+        </div>
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Navbar brand -->
+
+        <!-- Left links -->
+        <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="albums.html">Albums</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="newrelease.html">New releases</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="playlist.html">playlists</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About us</a>
+          </li>
+
+        </ul>
+        <!-- Left links -->
+        <div x-data="USERPROFILE" x-show="window.localStorage.getItem('logged_in') === 'yes'">
+          <div x-cloak x-data  >
+          <img class="profile-img me-2":src="Userprofiledetails?.images[0].url" width="40" height="40" style="border-radius:50%;">
+        </div>
+        </div>
+        
+        <li x-cloak x-show="window.localStorage.getItem('logged_in') !== 'yes'" class="nav-item Sign-in me-2">
+          <button class="nav-link gradient-btn" onclick="signInWithSpotify()">Sign in</button>
+          </lix>
+          <!-- sign out -->
+        <li x-cloak x-show="window.localStorage.getItem('logged_in') === 'yes'" class="nav-item Sign-in me-2">
+          <button class="nav-link gradient-btn" onclick="signoutofspotify()">Sign out</button>
+        </li>
+        <!-- sign out -->
+        <div class=" d-flex flex-column" x-data="searchOptions">
+          <div x-data="{open : false}">
+            <form class="d-flex input-group w-auto form-search">
+              <input type="search" id="search-form" x-model='query '
+                @keyup="query.length < 1 ? open=false : open=true" class="form-control rounded"
+                :placeholder="searchType" aria-label="Search" aria-describedby="search-addon">
+              <span class="input-group-text text-white border-0" id="search-addon">
+                <div class="dropdown ">
+                  <div class="" data-mdb-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-caret-down ps-2 text-white"></i>
+                  </div>
+
+                  <ul class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                    <li><a @click="searchType =$el.innerText" class="dropdown-item" href="#">Search Tracks</a></li>
+                    <li><a @click="searchType =$el.innerText" class="dropdown-item" href="#">Search Albums</a></li>
+                    <li><a @click="searchType =$el.innerText" class="dropdown-item" href="#">Search Artists</a></li>
+                    <li><a @click="searchType =$el.innerText" class="dropdown-item" href="#">Search Playlists</a></li>
+                  </ul>
+                </div>
+              </span>
+
+
+            </form>
+            <div class="mt-1 rounded  search-dropdown" id="search-dropdown">
+
+              <template x-for="item in items">
+                <div class=" w-100 search-content-container" x-show="open" @click.outside="open = false">
+                  <a :href="item.url" class="d-flex">
+                    <img :src="item.image_url " class="search-imgs" class="rounded">
+                    <div class="search-content-text">
+                      <h5 class="text-white" x-text="item.name"></h5>
+
+                      <span class="text-white" x-text="item.artist_name "></span>
+                    </div>
+                  </a>
+
+
+                </div>
+              </template>
+
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  
+
+
+    <!-- Collapsible wrapper -->
+
+    <!-- Container wrapper -->
+  </nav>
+  <!-- Navbar -->
+
+
+
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+  <script src="./js/routie.min.js"></script>
+
+  <script src="./js/custom.js"></script>
+
+  <script>
+    AOS.init();
+  </script>
+
+  <script>
+    function myFunction(x) {
+      x.classList.toggle("change");
+    }
+  </script>

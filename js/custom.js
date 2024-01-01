@@ -46,7 +46,7 @@ const oauthState = generateRandomState();
 
 const signInWithSpotify = () => {
   window.location.href =
-    "https://accounts.spotify.com/authorize?response_type=code&client_id=ca50887d25574b2fa3dfc59d08602698&scope=playlist-modify-public playlist-modify-private playlist-read-private user-read-recently-played&redirect_uri=https://elijah127.github.io/authorize.html&state=" +
+    "https://accounts.spotify.com/authorize?response_type=code&client_id=ca50887d25574b2fa3dfc59d08602698&scope=playlist-modify-public playlist-modify-private playlist-read-private user-read-private user-read-email user-follow-read user-read-recently-played&redirect_uri=https://elijah127.github.io/authorize.html&state=" +
     generateRandomState();
 };
 
@@ -927,7 +927,7 @@ document.addEventListener("alpine:init", () => {
 
 //sign out 
 function signoutofspotify() {
-  alert("cleared")
+  
   localStorage.clear()
   location.reload()
 }
@@ -951,4 +951,45 @@ document.addEventListener("alpine:init", () => {
     },
   }));
 });
+
+// artist user is following
+document.addEventListener("alpine:init", () => {
+  Alpine.data("userFollowing", () => ({
+    artistFollowing: {},
+    init() {
+      var current = this;
+      if (window.localStorage.getItem("logged_in") === "yes"){
+      getUserSpotifyData(
+        "https://api.spotify.com/v1/me/following?type=artist",
+        function (data) {
+          current.artistFollowing = data;
+          console.log(data, "artist following")
+        }
+      );
+      }
+    }
+    ,
+  }));
+});
+
+// current user profile
+// document.addEventListener("alpine:init", () => {
+//   Alpine.data("CURRENTUSERPROFILE", () => ({
+//     CurrentUserprofiledetails: {},
+//     init() {
+//       var current = this;
+//       if (window.localStorage.getItem("logged_in") === "yes") {
+
+//         getUserSpotifyData(
+//           "https://api.spotify.com/v1/me",
+//           function (data) {
+//             current. CurrentUserprofiledetails = data;
+//             console.log(data, "current user profile")
+//           }
+//         );
+//       }
+//     },
+//   }));
+// });
+
 
